@@ -174,7 +174,7 @@ function Main() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>응안해</Typography>
+                    <Typography className={classes.title} variant="h6" noWrap>凝安該</Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
