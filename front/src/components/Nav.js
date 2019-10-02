@@ -16,6 +16,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert'
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     grow: {
@@ -79,8 +80,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function Nav() {
-
+const Nav = ({ history }) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -97,6 +97,7 @@ function Nav() {
     };
 
     const handleMenuClose = () => {
+        history.push('/signin');
         setAnchorEl(null);
         handleMobileMenuClose();
     };
@@ -230,4 +231,4 @@ function Nav() {
     );
 }
 
-export default Nav;
+export default withRouter(Nav);
