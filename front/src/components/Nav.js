@@ -97,7 +97,7 @@ const Nav = ({ history }) => {
     };
 
     const handleMenuClose = () => {
-        history.push('/signin');
+        history.push('/register');
         setAnchorEl(null);
         handleMobileMenuClose();
     };
