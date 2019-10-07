@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import Nav from '../Nav';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -13,6 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+const Axios = require('../../Axios/Axios');
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -46,6 +48,22 @@ const useStyles = makeStyles(theme => ({
 function Login() {
   const classes = useStyles();
 
+  const [input, setInput] = useState({
+    id: '',
+    pw: '',
+  })
+
+  async function login(){
+    let result = await Axios({
+      url: 'api/user/login',
+      method: 'post',
+      data: {
+        id: input.id,
+        pw: input.pw,
+      }
+    })
+  }
+
   return (
     <Fragment>
       <Nav/>
@@ -71,6 +89,9 @@ function Login() {
                 name="id"
                 autoComplete="id"
                 autoFocus
+                onBlur={event => {
+                  setInput({...input, id: event.target.value})
+                }}
             />
             <TextField
                 variant="outlined"
@@ -82,6 +103,9 @@ function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onBlur={event => {
+                  setInput({...input, pw: event.target.value})
+                }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -93,6 +117,7 @@ function Login() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={login}
             >
               로그인
             </Button>
