@@ -6,6 +6,7 @@ import { Row, Col, Input, Layout, Form, Upload, Icon, Button, Select, Radio } fr
 
 const { Header, Footer, Sider, Content } = Layout;
 const { Option } = Select;
+const { TextArea } = Input;
 
 const SocketClient = ({form: {getFieldDecorator}}) => {
     const handleSubmit = e => {
@@ -63,7 +64,7 @@ const SocketClient = ({form: {getFieldDecorator}}) => {
                                     )}
                                 </Form.Item>
                                 <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-
+                                    <TextArea rows={4}/>
                                 </Form.Item>
                                 <Form.Item>
                                 <Button type="primary" htmlType="submit">
