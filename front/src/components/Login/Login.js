@@ -52,16 +52,30 @@ function Login() {
     id: '',
     pw: '',
   })
+  const [remember, setRemember] = useState(false);
 
-  async function login(){
+  async function handleSubmit(e){
+    e.preventDefault();
     let result = await Axios({
       url: 'api/user/login',
       method: 'post',
       data: {
         id: input.id,
-        pw: input.pw,
+        password: input.pw,
       }
     })
+    console.log(result);
+    if(result.status === 200){
+      if(remember){
+        window.sessionStorage.clear();
+        window.localStorage.setItem('token', result.data.data.token.token);
+        window.location.href = "/";
+      }else{
+        window.localStorage.clear();
+        window.sessionStorage.setItem('token', result.data.data.token.token);
+        window.location.href = "/";
+      }
+    }
   }
 
   return (
@@ -91,6 +105,7 @@ function Login() {
                 autoFocus
                 onBlur={event => {
                   setInput({...input, id: event.target.value})
+                  console.log(input)
                 }}
             />
             <TextField
@@ -105,10 +120,13 @@ function Login() {
                 autoComplete="current-password"
                 onBlur={event => {
                   setInput({...input, pw: event.target.value})
+                  console.log(input)
                 }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
+              checked={remember}
+              onChange={e => {setRemember(!remember)}}
               label="Remember me"
             />
             <Button
@@ -117,7 +135,7 @@ function Login() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={login}
+              onClick={handleSubmit}
             >
               로그인
             </Button>
