@@ -68,10 +68,12 @@ function Login() {
     }else{
       if(remember){
         window.sessionStorage.clear();
+        window.localStorage.setItem("id", result.data.data.user.id);
         window.localStorage.setItem('token', result.data.data.token.token);
         window.location.href = "/";
       }else{
         window.localStorage.clear();
+        window.sessionStorage.setItem("id", result.data.data.user.id);
         window.sessionStorage.setItem('token', result.data.data.token.token);
         window.location.href = "/";
       }
