@@ -2,10 +2,9 @@ import React, { Fragment } from 'react';
 import Nav from '../Nav';
 
 import 'antd/dist/antd.css';
-import { Row, Col, Input, Layout, Form, Upload, Icon, Button, Select, Radio } from 'antd';
+import { Row, Col, Input, Layout, Form, Upload, Icon, Button } from 'antd';
 
-const { Header, Footer, Sider, Content } = Layout;
-const { Option } = Select;
+const { Footer, Content } = Layout;
 const { TextArea } = Input;
 
 const SocketClient = ({form: {getFieldDecorator}}) => {

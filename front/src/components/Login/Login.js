@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 
 const Axios = require('../../Axios/Axios');
 
@@ -64,8 +63,9 @@ function Login() {
         password: input.pw,
       }
     })
-    console.log(result);
-    if(result.status === 200){
+    if(result.status !== 200){
+      alert("아아디 또는 비밀번호를 확인해 주세요.");
+    }else{
       if(remember){
         window.sessionStorage.clear();
         window.localStorage.setItem('token', result.data.data.token.token);
@@ -78,85 +78,84 @@ function Login() {
     }
   }
 
-  return (
-    <Fragment>
-      <Nav/>
-      <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            로그인
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="id"
-                label="ID"
-                name="id"
-                autoComplete="id"
-                autoFocus
-                onBlur={event => {
-                  setInput({...input, id: event.target.value})
-                  console.log(input)
-                }}
-            />
-            <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onBlur={event => {
-                  setInput({...input, pw: event.target.value})
-                  console.log(input)
-                }}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              checked={remember}
-              onChange={e => {setRemember(!remember)}}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={handleSubmit}
-            >
+  if(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null){
+    return (
+      <Fragment>
+        <Nav/>
+        <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item xs={12} sm={8} md={5} elevation={6} square>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
               로그인
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
+            </Typography>
+            <form className={classes.form} noValidate>
+              <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="id"
+                  label="ID"
+                  name="id"
+                  autoComplete="id"
+                  autoFocus
+                  onBlur={event => {setInput({...input, id: event.target.value})}}
+              />
+              <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onBlur={event => {setInput({...input, pw: event.target.value})}}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                checked={remember}
+                onChange={e => {setRemember(!remember)}}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={handleSubmit}
+              >
+                로그인
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="/register" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
+            </form>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
-    </Fragment>
+      </Fragment>
     );
+  }else{
+    console.log("hi");
+    window.location.href = "/";
+  }
 }
 
 export default Login;

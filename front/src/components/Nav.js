@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+    Link
+} from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/Styles';
 
 import Menu from '@material-ui/core/Menu';
@@ -83,6 +86,7 @@ const Nav = ({ history }) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -102,6 +106,10 @@ const Nav = ({ history }) => {
 
     const handleProfile = () => {
 
+    }
+
+    const handleLogin = () => {
+        window.location.href = "/login";
     }
 
     const handleLogout = () => {
@@ -126,7 +134,7 @@ const Nav = ({ history }) => {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleProfile}>Profile</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <MenuItem onClick={log ? handleLogin : handleLogout}>{log ? <span>Login</span> : <span>Logout</span> }</MenuItem>
         </Menu>
     );
 
@@ -144,20 +152,12 @@ const Nav = ({ history }) => {
             <MenuItem>
                 <IconButton aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="secondary">
-                        <ForumIcon/>
+                        <ForumIcon />
                     </Badge>
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
-            {/* <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem> */}
-            <MenuItem onClick={handleProfileMenuOpen}>
+            <MenuItem onClick={log ? handleLogin : handleLogout}>
                 <IconButton
                     aria-label="account of current user"
                     aria-controls="primary-search-account-menu"
@@ -166,10 +166,11 @@ const Nav = ({ history }) => {
                 >
                     <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
+                {log ? <span>Login</span> : <span>Logout</span>}
             </MenuItem>
         </Menu>
-    );
+    )
+
 
     return (
         <div className={classes.grow}>
@@ -183,7 +184,9 @@ const Nav = ({ history }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>凝安該</Typography>
+                    <Typography className={classes.title} variant="h6" noWrap>
+                        <Link to="/">凝安該</Link>
+                    </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
