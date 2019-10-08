@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+    Link
+} from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/Styles';
 
 import Menu from '@material-ui/core/Menu';
@@ -10,8 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import ForumIcon from '@material-ui/icons/Forum';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -84,6 +86,7 @@ const Nav = ({ history }) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -97,10 +100,27 @@ const Nav = ({ history }) => {
     };
 
     const handleMenuClose = () => {
-        history.push('/register');
         setAnchorEl(null);
         handleMobileMenuClose();
     };
+
+    const handleProfile = () => {
+        if(log){
+            alert("로그인이 필요한 서비스입니다.");
+        }else{
+            window.location.href = "/profile";
+        }
+    }
+
+    const handleLogin = () => {
+        window.location.href = "/login";
+    }
+
+    const handleLogout = () => {
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        window.location.href = "/";
+    }
 
     const handleMobileMenuOpen = event => {
         setMobileMoreAnchorEl(event.currentTarget);
@@ -117,8 +137,8 @@ const Nav = ({ history }) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleProfile}>Profile</MenuItem>
+            <MenuItem onClick={log ? handleLogin : handleLogout}>{log ? <span>Login</span> : <span>Logout</span> }</MenuItem>
         </Menu>
     );
 
@@ -136,20 +156,12 @@ const Nav = ({ history }) => {
             <MenuItem>
                 <IconButton aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
+                        <ForumIcon />
                     </Badge>
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
-            <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
+            <MenuItem onClick={log ? handleLogin : handleLogout}>
                 <IconButton
                     aria-label="account of current user"
                     aria-controls="primary-search-account-menu"
@@ -158,10 +170,11 @@ const Nav = ({ history }) => {
                 >
                     <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
+                {log ? <span>Login</span> : <span>Logout</span>}
             </MenuItem>
         </Menu>
-    );
+    )
+
 
     return (
         <div className={classes.grow}>
@@ -175,7 +188,9 @@ const Nav = ({ history }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>凝安該</Typography>
+                    <Typography className={classes.title} variant="h6" noWrap>
+                        <Link to="/">凝安該</Link>
+                    </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -193,12 +208,7 @@ const Nav = ({ history }) => {
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={4} color="secondary">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
+                                <ForumIcon />
                             </Badge>
                         </IconButton>
                         <IconButton

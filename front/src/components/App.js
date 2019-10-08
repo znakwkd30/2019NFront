@@ -6,6 +6,8 @@ import Main from './Main/Main';
 import Account from './Account/Account';
 import Login from './Login/Login';
 import Chat from './Socket/SocketFront';
+import Profile from './Profile/Profile';
+import Search from './Search/Search';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Route path="/register" component={Account}/>
       <Route path="/login" component={Login}/>
       <Route path="/chat" component={Chat}/>
+      <Route path="/profile" component={Profile}/>
+      <Route path="/search" component={Search}/>
     </Router>
   );
 }
