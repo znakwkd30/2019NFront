@@ -105,7 +105,11 @@ const Nav = ({ history }) => {
     };
 
     const handleProfile = () => {
-
+        if(log){
+            alert("로그인이 필요한 서비스입니다.");
+        }else{
+            window.location.href = "/profile";
+        }
     }
 
     const handleLogin = () => {
@@ -207,11 +211,6 @@ const Nav = ({ history }) => {
                                 <ForumIcon />
                             </Badge>
                         </IconButton>
-                        {/* <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton> */}
                         <IconButton
                             edge="end"
                             aria-label="account of current user"
