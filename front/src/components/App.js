@@ -17,7 +17,7 @@ function App() {
       <Route path="/login" component={Login}/>
       <Route path="/chat" component={Chat}/>
       <Route path="/profile" component={Profile}/>
-      <Route path="/search" component={Search}/>
+      <Route path="/search/:name" component={Search}/>
     </Router>
   );
 }
