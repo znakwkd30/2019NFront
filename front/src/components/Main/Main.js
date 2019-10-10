@@ -2,6 +2,8 @@ import React, { useEffect, useCallback, useState, Fragment } from 'react';
 import Time from 'react-time-format';
 import Nav from '../Nav';
 import Axios from '../../Axios/Axios';
+import { Link } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -70,16 +72,11 @@ function Main() {
     return (
         <Fragment>
             <Nav/>
-            <div style={{display: 'flex', justifyContent: 'start', flexWrap: 'wrap'}}>
+            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
             {Object.keys(products).map((product, i) => (
-                <div style={{margin: "30px", width: "400px"}} key={ i }>
+                <div style={{margin: "20px", width: "420px"}} key={ i }>
                 <Card className={classes.card}>
-                <CardHeader /*key{i}*/
-                    avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                        R
-                    </Avatar>
-                    }
+                <CardHeader
                     action={
                     <IconButton aria-label="settings">
                         <MoreVertIcon />
@@ -118,8 +115,8 @@ function Main() {
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                     <Typography paragraph>상세설명 : {products[i].description}</Typography>
-                    <Typography paragraph>해시태그 : {products[i].hashtag}</Typography>
-                    <Typography paragraph>카테고리 : {products[i].category}</Typography>
+                    <Typography paragraph>해시태그 : <Link to="/search">{products[i].hashtag}</Link></Typography>
+                    <Typography paragraph>카테고리 : <Link to="/search">{products[i].category}</Link></Typography>
                     </CardContent>
                 </Collapse>
                 </Card>

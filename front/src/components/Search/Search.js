@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import Nav from '../Nav';
 
-function Search(){
+function Search({match}){
     return(
-        <Nav/>
+        <Fragment>
+            <Nav/>
+            <p>{match.params.name}</p>
+        </Fragment>
     )
 }
 

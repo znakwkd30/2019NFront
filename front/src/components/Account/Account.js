@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import Nav from '../Nav';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -9,6 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+
+const Axios = require('../../Axios/Axios');
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -42,6 +44,36 @@ const useStyles = makeStyles(theme => ({
 function Account() {
   const classes = useStyles();
 
+  const [input, setInput] = useState({
+    id: '',
+    name: '',
+    pw: '',
+    email: '',
+    phone: '',
+    school: '',
+  })
+
+  async function handleSumbit(e) {
+    e.preventDefault();
+    let result = await Axios({
+      url: 'api/user/',
+      method: 'post',
+      data: {
+        id: input.id,
+        name: input.name,
+        password: input.pw,
+        email: input.email,
+        phoneNumber: input.phone,
+        schoolName: input.school,
+      }
+    })
+    if(result.status !== 200) {
+      alert("요구조건을 만족하지 못했습니다.");
+    } else {
+      window.location.href = "/login"
+    }
+  }
+
   return (
     <Fragment>
       <Nav/>
@@ -66,6 +98,7 @@ function Account() {
                 name="id"
                 autoComplete="id"
                 autoFocus
+                onBlur={event => {setInput({...input, id: event.target.value})}}
             />
             <TextField
                 variant="outlined"
@@ -75,6 +108,7 @@ function Account() {
                 label="Name"
                 name="name"
                 autoFocus
+                onBlur={event => {setInput({...input, name: event.target.value})}}
             />
             <TextField
                 variant="outlined"
@@ -84,6 +118,7 @@ function Account() {
                 name="Password"
                 label="Password"
                 type="password"
+                onBlur={event => {setInput({...input, pw: event.target.value})}}
             />
             <TextField
                 variant="outlined"
@@ -95,6 +130,7 @@ function Account() {
                 name="email"
                 type="email"
                 autoFocus
+                onBlur={event => {setInput({...input, email: event.target.value})}}
             />
             <TextField
                 variant="outlined"
@@ -104,6 +140,7 @@ function Account() {
                 label="Phone"
                 name="phoneNumber"
                 autoFocus
+                onBlur={event => {setInput({...input, phone: event.target.value})}}
             />
             <TextField
                 variant="outlined"
@@ -113,6 +150,7 @@ function Account() {
                 label="School"
                 name="SchoolName"
                 autoFocus
+                onBlur={event => {setInput({...input, school: event.target.value})}}
             />
             <Button
               type="submit"
@@ -120,6 +158,7 @@ function Account() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleSumbit}
             >
               회원가입
             </Button>

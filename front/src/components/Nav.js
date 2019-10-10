@@ -153,27 +153,27 @@ const Nav = ({ history }) => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                        <ForumIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem onClick={log ? handleLogin : handleLogout}>
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                {log ? <span>Login</span> : <span>Logout</span>}
-            </MenuItem>
-        </Menu>
-    )
+        <MenuItem>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+                <Badge badgeContent={4} color="secondary">
+                    <ForumIcon />
+                </Badge>
+            </IconButton>
+            <p>Messages</p>
+        </MenuItem>
+        <MenuItem onClick={log ? handleLogin : handleLogout}>
+            <IconButton
+                aria-label="account of current user"
+                aria-controls="primary-search-account-menu"
+                aria-haspopup="true"
+                color="inherit"
+            >
+                <AccountCircle />
+            </IconButton>
+            {log ? <span>Login</span> : <span>Logout</span>}
+        </MenuItem>
+    </Menu>
+)
 
 
     return (

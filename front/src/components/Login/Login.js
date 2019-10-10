@@ -53,7 +53,7 @@ function Login() {
   })
   const [remember, setRemember] = useState(false);
 
-  async function handleSubmit(e){
+  async function handleSubmit(e) {
     e.preventDefault();
     let result = await Axios({
       url: 'api/user/login',
@@ -63,15 +63,15 @@ function Login() {
         password: input.pw,
       }
     })
-    if(result.status !== 200){
+    if(result.status !== 200) {
       alert("아아디 또는 비밀번호를 확인해 주세요.");
-    }else{
-      if(remember){
+    } else {
+      if(remember) {
         window.sessionStorage.clear();
         window.localStorage.setItem("id", result.data.data.user.id);
         window.localStorage.setItem('token', result.data.data.token.token);
         window.location.href = "/";
-      }else{
+      } else {
         window.localStorage.clear();
         window.sessionStorage.setItem("id", result.data.data.user.id);
         window.sessionStorage.setItem('token', result.data.data.token.token);
