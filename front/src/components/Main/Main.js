@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback, useState, Fragment } from 'react';
+import Time from 'react-time-format';
 import Nav from '../Nav';
 import Axios from '../../Axios/Axios';
 import { makeStyles } from '@material-ui/core/styles';
@@ -71,7 +72,7 @@ function Main() {
             <Nav/>
             <div style={{display: 'flex', justifyContent: 'start', flexWrap: 'wrap'}}>
             {Object.keys(products).map((product, i) => (
-                <div style={{margin: "30px", width: "420px"}} key={ i }>
+                <div style={{margin: "30px", width: "400px"}} key={ i }>
                 <Card className={classes.card}>
                 <CardHeader /*key{i}*/
                     avatar={
@@ -85,7 +86,7 @@ function Main() {
                     </IconButton>
                     }
                     title={products[i].productName}
-                    subheader={products[i].updateDay}
+                    subheader={<Time value={products[i].updateDay} format="YYYY/MM/DD hh:mm"/>}
                 />
                 <img src={"http://10.80.163.141:3065/"+products[i].Images[0].src} style={{width: 350, height: 200}}></img>
                 {/* <CardMedia
@@ -94,7 +95,9 @@ function Main() {
                     title="Paella dish"
                 /> */}
                 <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography variant="body2" color="textSecondary" component="p"
+                                style={{fontSize: "24px", fontFamily: "궁서체"}}>
+                        {products[i].price}원
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -114,9 +117,9 @@ function Main() {
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                    <Typography paragraph>
-                        {products[i].description}
-                    </Typography>
+                    <Typography paragraph>상세설명 : {products[i].description}</Typography>
+                    <Typography paragraph>해시태그 : {products[i].hashtag}</Typography>
+                    <Typography paragraph>카테고리 : {products[i].category}</Typography>
                     </CardContent>
                 </Collapse>
                 </Card>
