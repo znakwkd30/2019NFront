@@ -20,7 +20,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles(theme => ({
     card: {
-      maxWidth: 345,
+      maxWidth: 400,
     },
     media: {
       height: 0,
@@ -49,74 +49,80 @@ function Main() {
       setExpanded(!expanded);
     };
 
-    const [product, setProduct] = useState({});
+    const [products, setProducts] = useState({});
+    const [images, setImages] = useState({});
     async function mainProduct() {
         let result = await Axios({
             url: 'api/product/main',
             method: 'get'
         })
         console.log(result);
-        setProduct(result.data.productList);
-        console.log(product);
+        console.log(result.data.productList[0].Images[0].src)
+        setProducts(result.data.productList);
+        setImages(result.data.productList.Images);
     }
 
     useEffect(() => {
-        mainProduct()
+        mainProduct();
     }, []);
 
     return (
         <Fragment>
             <Nav/>
-            <Card className={classes.card}>
-            <CardHeader
-                avatar={
-                <Avatar aria-label="recipe" className={classes.avatar}>
-                    R
-                </Avatar>
-                }
-                action={
-                <IconButton aria-label="settings">
-                    <MoreVertIcon />
-                </IconButton>
-                }
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
-            />
-            <CardMedia
-                className={classes.media}
-                image="/static/images/cards/paella.jpg"
-                title="Paella dish"
-            />
-            <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {product.name}
-                </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
-                </IconButton>
-                <IconButton
-                className={clsx(classes.expand, {
-                    [classes.expandOpen]: expanded,
-                })}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-                >
-                <ExpandMoreIcon />
-                </IconButton>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <div style={{display: 'flex', justifyContent: 'start', flexWrap: 'wrap'}}>
+            {Object.keys(products).map((product, i) => (
+                <div style={{margin: "30px", width: "420px"}} key={ i }>
+                <Card className={classes.card}>
+                <CardHeader /*key{i}*/
+                    avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                        R
+                    </Avatar>
+                    }
+                    action={
+                    <IconButton aria-label="settings">
+                        <MoreVertIcon />
+                    </IconButton>
+                    }
+                    title={products[i].productName}
+                    subheader={products[i].updateDay}
+                />
+                <img src={"http://10.80.163.141:3065/"+products[i].Images[0].src} style={{width: 350, height: 200}}></img>
+                {/* <CardMedia
+                    className={classes.media}
+                    image={products[i].Images[0].src}
+                    title="Paella dish"
+                /> */}
                 <CardContent>
-                <Typography paragraph>Method:</Typography>
-                <Typography paragraph>
-                    Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                    minutes.
-                </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                    </Typography>
                 </CardContent>
-            </Collapse>
-            </Card>
+                <CardActions disableSpacing>
+                    <IconButton aria-label="add to favorites">
+                    <FavoriteIcon />
+                    </IconButton>
+                    <IconButton
+                    className={clsx(classes.expand, {
+                        [classes.expandOpen]: expanded,
+                    })}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                    >
+                    <ExpandMoreIcon />
+                    </IconButton>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                    <Typography paragraph>
+                        {products[i].description}
+                    </Typography>
+                    </CardContent>
+                </Collapse>
+                </Card>
+                </div>
+                ))}
+            </div>            
         </Fragment>
     );
 }

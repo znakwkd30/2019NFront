@@ -1,3 +1,3 @@
 module.exports = {
-    baseUri: 'http://10.80.163.141:3065/'
+    baseUri: 'http://localhost:3065/'
 };
