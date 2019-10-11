@@ -4,9 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 
 import Nav from '../Nav';
-import { Typography } from 'antd';
 
 const useStyles = makeStyles({
     card: {
@@ -24,19 +24,20 @@ const useStyles = makeStyles({
     },
 });
 
-async function Profile() {
+function Profile() {
     const classes = useStyles();
 
     const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
-    const [userInfo, setUserInfo] = React.useState({});
+    const [userInfo, setUserInfo] = React.useState([]);
+    const [userImg, setUserImg] = React.useState();
 
     async function getProfile(){
         let result = await Axios({
             url: "api/user/userinfo",
-            headers: {"token" : window.sessionStorage.getItem("token")},
+            headers: {"token" : window.sessionStorage.getItem("token") || window.localStorage.getItem("token")},
         })
         setUserInfo(result.data.data);
-        console.log(result.data.data.ProfileImages[0].src);
+        setUserImg(result.data.data.ProfileImages[0].src);
     }
 
     React.useEffect(() => {
@@ -44,7 +45,8 @@ async function Profile() {
     }, []);
 
     function call(){
-        console.log(userInfo.ProfileImages[0].src);
+        console.log(userInfo);
+        console.log(userImg);
     }
 
     if (log) {
@@ -56,12 +58,11 @@ async function Profile() {
                 <Nav />
                 <Card className={classes.card}>
                     <div className={classes.main}>
-                    <Avatar alt="profileImg" src={userInfo.ProfileImages === null ? "../Profile/noneImg.png" : "http://10.80.163.141:3065/" + userInfo.ProfileImages[0].src} className={classes.avatar} />
-                        <Typography align="center" variant="h2">
+                    <Avatar alt="profileImg" src={userInfo.ProfileImages === null ? "../Profile/noneImg.png" : "http://10.80.163.141:3065/\\" + userImg} className={classes.avatar} />
+                        <Typography variant="h2" align="center">
                             {userInfo.name}
                         </Typography>
                     </div>
-                    <button onClick={call}>button</button>
                 </Card>
             </Fragment>
         )
