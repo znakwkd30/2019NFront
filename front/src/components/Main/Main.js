@@ -3,6 +3,7 @@ import Time from 'react-time-format';
 import Nav from '../Nav';
 import Axios from '../../Axios/Axios';
 import { Link } from 'react-router-dom';
+import './main.css'
 
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -77,10 +78,13 @@ function Main() {
     return (
         <Fragment>
             <Nav />
+            <div style={{ display: "flex", justifyContent: "center" }}>
+                <img src="http://10.80.163.141:3065/img1.jpg"/>
+            </div>
             <div className={classes.root}>
                 {products.map((item, key) => {
                     return (
-                        <Card className={classes.card}>
+                        <Card className={classes.card} key={key}>
                             <CardHeader
                                 action={
                                     <IconButton aria-label="settings">
