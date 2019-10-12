@@ -1,9 +1,10 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import Time from 'react-time-format';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Nav from '../Nav';
 import Axios from '../../Axios/Axios';
 import { Link } from 'react-router-dom';
-import './main.css'
 
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -24,6 +25,19 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         justifyContent: "center",
         flexWrap: "wrap",
+    },
+    banner: {
+        display: "flex",
+        justifyContent: "center"
+    },
+    carousel: {
+        marginBottom: 40,
+        width: "80%",
+        height: 600,
+    },
+    bannerImg: {
+        width: "100%",
+        height: 600,
     },
     card: {
         margin: "20px",
@@ -51,33 +65,59 @@ const useStyles = makeStyles(theme => ({
 function Main() {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
+    const [products, setProducts] = useState([]);
+    const [imagesPath, setImagesPath] = useState([]);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
+        console.log(imagesPath);
     };
 
-    const [products, setProducts] = useState([]);
-    const [images, setImages] = useState({});
+    async function getBanner(){
+        let result = await Axios({
+            url: "banner",
+            method: "get",
+        })
+        setImagesPath(result.data.image);
+    }
+
     async function mainProduct() {
         let result = await Axios({
             url: 'api/product/main',
             method: 'get'
         })
-        console.log(result.data.productList);
         setProducts(result.data.productList);
-        setImages(result.data.productList.Images);
+        console.log(result.data.productList);
     }
 
     useEffect(() => {
         mainProduct();
     }, []);
 
+    useEffect(() => {
+        getBanner();
+    }, [])
+
     return (
         <Fragment>
             <Nav />
-            <div style={{ display: "flex", justifyContent: "center" }}>
-                <img src="http://10.80.163.141:3065/img1.jpg"/>
+            <div className={classes.banner}>
+                <Carousel
+                    className={classes.carousel}
+                    showStatus={false}
+                    showThumbs={false}
+                    autoPlay={true}
+                    infiniteLoop={true}
+                >
+                    <div>
+                        <img className={classes.bannerImg} src={"http://10.80.163.141:3065/" + imagesPath[0]} alt="banner"/>
+                    </div>
+                    <div>
+                        <img className={classes.bannerImg} src={"http://10.80.163.141:3065/" + imagesPath[1]} alt="banner"/>
+                    </div>
+                </Carousel>
             </div>
+            <Typography variant="h4" align="center">최근 등록된 상품</Typography>
             <div className={classes.root}>
                 {products.map((item, key) => {
                     return (
@@ -91,7 +131,7 @@ function Main() {
                                 title={item.productName}
                                 subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                             />
-                            <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img>
+                            <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p"
                                     style={{ fontSize: "24px", fontFamily: "궁서체" }}>
