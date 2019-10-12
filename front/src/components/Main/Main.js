@@ -17,8 +17,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+import defaultImg from '../../Assets/noImg.png';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -41,7 +44,8 @@ const useStyles = makeStyles(theme => ({
     },
     card: {
         margin: "20px",
-        maxWidth: 400,
+        width: 350,
+        height: 420,
     },
     media: {
         height: 0,
@@ -64,50 +68,71 @@ const useStyles = makeStyles(theme => ({
 
 function Main() {
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
+    const [rendering, setRendering] = useState(false);
+    const [expanded, setExpanded] = useState(false);
     const [products, setProducts] = useState([]);
+    const [heartProducts, setHeartProducts] = useState([]);
     const [imagesPath, setImagesPath] = useState([]);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-        console.log(imagesPath);
-    };
-
     async function handleHeartClick(id) {
-        let result = await Axios({
-            url: "/api/heart/click/" + id,
-            headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
-            method: "post"
-        })
-        console.log(result);
+        try {
+            await Axios({
+                url: "/api/heart/click/" + id,
+                headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
+                method: "post"
+            })
+        } catch{
+
+        }
     }
 
-    async function getBanner(){
-        let result = await Axios({
-            url: "banner",
-            method: "get",
-        })
-        setImagesPath(result.data.image);
-    }
+    async function handleHeartUnclick(id) {
+        try {
+            await Axios({
+                url: "api/heart/unclick/" + id,
+                headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
+                method: "post",
+            })
+        } catch{
 
-    async function mainProduct() {
-        let result = await Axios({
-            url: 'api/product/main',
-            method: 'get'
-        })
-        setProducts(result.data.productList);
-        console.log(result.data.productList);
+        }
     }
 
     useEffect(() => {
-        mainProduct();
-    }, []);
+        async function getBanner() {
+            let result = await Axios({
+                url: "banner",
+                method: "get",
+            })
+            setImagesPath(result.data.image);
+        }
 
-    useEffect(() => {
+        async function getMainProduct() {
+            let result = await Axios({
+                url: 'api/product/main',
+                method: 'get'
+            })
+            setProducts(result.data.productList);
+        }
+
+        async function getHeartProduct() {
+            let result = await Axios({
+                url: "api/product/heartProductList",
+                header: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
+                method: "get",
+            })
+            console.log(result);
+            setHeartProducts(result);
+        }
+
         getBanner();
-    }, [])
+        getMainProduct();
+        getHeartProduct();
+        setRendering(true);
+    }, [setRendering]);
 
-    return (
+    return(
+        rendering ?
         <Fragment>
             <Nav />
             <div className={classes.banner}>
@@ -119,10 +144,10 @@ function Main() {
                     infiniteLoop={true}
                 >
                     <div>
-                        <img className={classes.bannerImg} src={"http://10.80.163.141:3065/" + imagesPath[0]} alt="banner"/>
+                        <img className={classes.bannerImg} src={imagesPath[0] === undefined ? defaultImg : "http://10.80.163.141:3065/" + imagesPath[0]} alt="banner" />
                     </div>
                     <div>
-                        <img className={classes.bannerImg} src={"http://10.80.163.141:3065/" + imagesPath[1]} alt="banner"/>
+                        <img className={classes.bannerImg} src={imagesPath[1] === undefined ? defaultImg : "http://10.80.163.141:3065/" + imagesPath[1]} alt="banner" />
                     </div>
                 </Carousel>
             </div>
@@ -140,7 +165,7 @@ function Main() {
                                 title={item.productName}
                                 subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                             />
-                            <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
+                            <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p"
                                     style={{ fontSize: "24px", fontFamily: "궁서체" }}>
@@ -149,33 +174,15 @@ function Main() {
                             </CardContent>
                             <CardActions disableSpacing>
                                 <IconButton aria-label="add to favorites">
-                                    <FavoriteIcon 
-                                        onClick={e => handleHeartClick(item.id)}
-                                    />
-                                </IconButton>
-                                <IconButton
-                                    className={clsx(classes.expand, {
-                                        [classes.expandOpen]: expanded,
-                                    })}
-                                    onClick={handleExpandClick}
-                                    aria-expanded={expanded}
-                                    aria-label="show more"
-                                >
-                                    <ExpandMoreIcon />
+                                    {/* <FavoriteBorderIcon onClick={e => handleHeartClick(item.id)} /> */}
+                                    <FavoriteIcon onClick={e => handleHeartUnclick(item.id)} />
                                 </IconButton>
                             </CardActions>
-                            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                <CardContent>
-                                    <Typography paragraph>상세설명 : {item.description}</Typography>
-                                    <Typography paragraph>해시태그 : <Link to={"/hashtag/" + item.hashtag}>{item.hashtag}</Link></Typography>
-                                    <Typography paragraph>카테고리 : <Link to={"/search/" + item.category}>{item.category}</Link></Typography>
-                                </CardContent>
-                            </Collapse>
                         </Card>
                     )
                 })}
             </div>
-            <hr/>
+            <hr />
             <div style={{ display: "block" }}>
                 <div style={{ margin: "auto", width: "1000px", fontFamily: "나눔손글씨 김유이체", fontSize: "20px", fontWeight: "bold" }}>
                     <p>WDNA 대표이사 OOO  개인정보보호담당자 OOO  사업자등록정보 X  통신판매업신고 X</p>
@@ -185,6 +192,7 @@ function Main() {
                 </div>
             </div>
         </Fragment>
+        : <p></p>
     );
 }
 
