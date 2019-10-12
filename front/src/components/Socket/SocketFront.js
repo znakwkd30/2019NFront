@@ -1,12 +1,6 @@
 import React, { Fragment } from 'react';
 import Nav from '../Nav';
 
-import 'antd/dist/antd.css';
-import { Row, Col, Input, Layout, Form, Upload, Icon, Button } from 'antd';
-
-const { Footer, Content } = Layout;
-const { TextArea } = Input;
-
 const SocketClient = ({form: {getFieldDecorator}}) => {
     const handleSubmit = e => {
         e.preventDefault();
@@ -28,14 +22,14 @@ const SocketClient = ({form: {getFieldDecorator}}) => {
     return (
         <Fragment>
             <Nav/>
-            <div>
+            {/* <div>
                 <Layout>
                     <Content>Content</Content>
                     <Footer>
                         <Row>
                         <Col>
                             <Form onSubmit={handleSubmit}>
-                                {/* <Form.Item label="Select[multiple]">
+                                <Form.Item label="Select[multiple]">
                                 {getFieldDecorator('select-multiple', {
                                 rules: [
                                     { required: true, message: 'Please select your favourite colors!', type: 'array' },
@@ -47,7 +41,7 @@ const SocketClient = ({form: {getFieldDecorator}}) => {
                                     <Option value="blue">Blue</Option>
                                 </Select>,
                                 )}
-                                </Form.Item> */}
+                                </Form.Item>
                                 <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
                                     {getFieldDecorator('dragger', {
                                         valuePropName: 'fileList',
@@ -75,9 +69,11 @@ const SocketClient = ({form: {getFieldDecorator}}) => {
                         </Row>
                     </Footer>
                 </Layout>
-            </div>
+            </div> */}
         </Fragment>
     );
 }
 
-export default Form.create()(SocketClient);
+export default SocketClient;
+
+// Form.create()()
