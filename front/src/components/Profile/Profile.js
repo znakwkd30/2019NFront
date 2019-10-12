@@ -12,7 +12,7 @@ function Profile() {
         return (
             <Fragment>
                 <Nav />
-                
+            
             </Fragment>
         )
     }
