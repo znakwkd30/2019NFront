@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 
 import Nav from '../Nav';
 
-import defaultImg from '../../Assets/noneImg.png';
+import defaultImg from '../../Assets/noImg.png';
 import { CardContent } from '@material-ui/core';
 
 const useStyles = makeStyles({
