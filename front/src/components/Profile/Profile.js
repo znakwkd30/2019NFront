@@ -5,8 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 import Nav from '../Nav';
+
+import defaultImg from '../../Assets/noneImg.png';
 
 const useStyles = makeStyles({
     card: {
@@ -31,10 +34,10 @@ function Profile() {
     const [userInfo, setUserInfo] = React.useState([]);
     const [userImg, setUserImg] = React.useState();
 
-    async function getProfile(){
+    async function getProfile() {
         let result = await Axios({
             url: "api/user/userinfo",
-            headers: {"token" : window.sessionStorage.getItem("token") || window.localStorage.getItem("token")},
+            headers: { "token": window.sessionStorage.getItem("token") || window.localStorage.getItem("token") },
         })
         setUserInfo(result.data.data);
         setUserImg(result.data.data.ProfileImages[0].src);
@@ -43,11 +46,6 @@ function Profile() {
     React.useEffect(() => {
         getProfile();
     }, []);
-
-    function call(){
-        console.log(userInfo);
-        console.log(userImg);
-    }
 
     if (log) {
         alert("로그인이 필요한 서비스입니다.");
@@ -58,10 +56,13 @@ function Profile() {
                 <Nav />
                 <Card className={classes.card}>
                     <div className={classes.main}>
-                    <Avatar alt="profileImg" src={userInfo.ProfileImages === null ? "../Profile/noneImg.png" : "http://10.80.163.141:3065/\\" + userImg} className={classes.avatar} />
-                        <Typography variant="h2" align="center">
+                        <Avatar alt="profileImg" src={userInfo.length === 0 ? defaultImg : "http://10.80.163.141:3065/\\" + userImg} className={classes.avatar} />
+                        <Typography variant="h4" align="center">
                             {userInfo.name}
                         </Typography>
+                        <Button variant="contained" className={classes.button}>
+                            Default
+                        </Button>
                     </div>
                 </Card>
             </Fragment>
