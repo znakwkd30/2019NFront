@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Route, BrowserRouter as Router
+  Route, BrowserRouter as Router, Switch
 } from 'react-router-dom';
 import Main from './Main/Main';
 import Account from './Account/Account';
@@ -17,7 +17,10 @@ function App() {
       <Route path="/login" component={Login}/>
       <Route path="/chat" component={Chat}/>
       <Route path="/profile" component={Profile}/>
-      <Route path="/search/:name" component={Search}/>
+      <Switch>
+        <Route path="/search/:name" component={Search}/>
+        <Route path="/search/hashtag/:hashtag" component={Search}/>
+      </Switch>
     </Router>
   );
 }
