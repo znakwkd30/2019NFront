@@ -30,7 +30,13 @@ const useStyles = makeStyles({
     Typography: {
         margin: "20px 0 0 0",
 
-    }
+    },
+    myproduct: {
+        width: "80%",
+        margin: "0 auto",
+        height: "130px",
+
+    },
 
 });
 
@@ -74,6 +80,16 @@ function Profile() {
                         <Typography variant="h3" align="center" className={classes.Typography}>
                             {userInfo.name}
                         </Typography>
+                    
+                    </div>
+                    
+                </Card>
+                <Card>
+                    <div className={classes.myproduct}>
+                            
+                    </div>
+                    <div className={classes.heartProduct}>
+                            
                     </div>
                 </Card>
             </Fragment>
