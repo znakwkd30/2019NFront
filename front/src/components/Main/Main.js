@@ -116,13 +116,22 @@ function Main() {
                             <Collapse in={expanded} timeout="auto" unmountOnExit>
                                 <CardContent>
                                     <Typography paragraph>상세설명 : {item.description}</Typography>
-                                    <Typography paragraph>해시태그 : <Link to={"/search/" + item.hashtag}>{item.hashtag}</Link></Typography>
+                                    <Typography paragraph>해시태그 : <Link to={"/search/hashtag/" + item.hashtag}>{item.hashtag}</Link></Typography>
                                     <Typography paragraph>카테고리 : <Link to={"/search/" + item.category}>{item.category}</Link></Typography>
                                 </CardContent>
                             </Collapse>
                         </Card>
                     )
                 })}
+            </div>
+            <hr/>
+            <div style={{ display: "block" }}>
+                <div style={{ margin: "auto", width: "1000px", fontFamily: "나눔손글씨 김유이체", fontSize: "20px", fontWeight: "bold" }}>
+                    <p>WDNA 대표이사 OOO  개인정보보호담당자 OOO  사업자등록정보 X  통신판매업신고 X</p>
+                    <p>대구광역시 달성군 구지면 창리로11길 93 / TEL X</p>
+                    <p>너울시장은 통신판매중개자로서 중고거래마켓 너울시장의 거래 당사자가 아니며, 입점판매가 등록한 상품정보 및 거래에 대해 책임을 지지 않습니다</p>
+                    <p>Copyright ⓒ WeDoNotAnything Corp. All rights reserved.</p>
+                </div>
             </div>
         </Fragment>
     );
