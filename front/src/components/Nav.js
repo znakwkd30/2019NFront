@@ -193,7 +193,9 @@ const Nav = ({ history }) => {
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                            <SearchIcon />
+                            <SearchIcon
+                                
+                            />
                         </div>
                         <InputBase
                             placeholder="Search…"
