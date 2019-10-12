@@ -73,6 +73,15 @@ function Main() {
         console.log(imagesPath);
     };
 
+    async function handleHeartClick(id) {
+        let result = await Axios({
+            url: "/api/heart/click/" + id,
+            headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
+            method: "post"
+        })
+        console.log(result);
+    }
+
     async function getBanner(){
         let result = await Axios({
             url: "banner",
@@ -140,7 +149,9 @@ function Main() {
                             </CardContent>
                             <CardActions disableSpacing>
                                 <IconButton aria-label="add to favorites">
-                                    <FavoriteIcon />
+                                    <FavoriteIcon 
+                                        onClick={e => handleHeartClick(item.id)}
+                                    />
                                 </IconButton>
                                 <IconButton
                                     className={clsx(classes.expand, {
@@ -156,7 +167,7 @@ function Main() {
                             <Collapse in={expanded} timeout="auto" unmountOnExit>
                                 <CardContent>
                                     <Typography paragraph>상세설명 : {item.description}</Typography>
-                                    <Typography paragraph>해시태그 : <Link to={"/search/hashtag/" + item.hashtag}>{item.hashtag}</Link></Typography>
+                                    <Typography paragraph>해시태그 : <Link to={"/hashtag/" + item.hashtag}>{item.hashtag}</Link></Typography>
                                     <Typography paragraph>카테고리 : <Link to={"/search/" + item.category}>{item.category}</Link></Typography>
                                 </CardContent>
                             </Collapse>
