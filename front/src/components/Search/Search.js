@@ -56,22 +56,32 @@ function Search({match}){
     };
 
     const [products, setProducts] = useState([]);
-    async function getProduct() {
-        let result = await Axios({
-            url: 'api/product/searchProduct/' + match.params.name,
-            method: 'get'
-        })
-        setProducts(result.data.productList);
+    async function searchProduct() {
+        let result;
+        if (match.params.name) {
+            result = await Axios({
+                url: 'api/product/searchProduct/' + match.params.name,
+                headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
+                method: 'get'
+            })
+        } else {
+            result = await Axios({
+                url: 'api/product/hashtagProduct/' + match.params.hashtag,
+                headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
+                method: 'get'
+            })
+        }
+        setProducts(result.data.productList);            
     }
 
     useEffect(() => {
-        getProduct();
+        searchProduct();
     }, []);
 
     return(
         <Fragment>
             <Nav/>
-            <div className={classes.root}>
+            <div className={classes.root} style={{ width: "80%", margin: "auto" }}> 
                 {products.map((item, key) => {
                     return (
                         <Card className={classes.card} key={key}>
@@ -84,7 +94,7 @@ function Search({match}){
                                 title={item.productName}
                                 subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                             />
-                            <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
+                            {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p"
                                     style={{ fontSize: "24px", fontFamily: "궁서체" }}>
