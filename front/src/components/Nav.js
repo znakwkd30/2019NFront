@@ -186,7 +186,7 @@ const Nav = ({ history }) => {
                         color="inherit"
                         aria-label="open drawer"
                     >
-                        <MenuIcon />
+                    <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
                         <Link to="/">凝安該</Link>

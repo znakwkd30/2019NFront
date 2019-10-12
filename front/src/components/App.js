@@ -19,7 +19,7 @@ function App() {
       <Route path="/profile" component={Profile}/>
       <Switch>
         <Route path="/search/:name" component={Search}/>
-        <Route path="/search/hashtag/:hashtag" component={Search}/>
+        <Route path="/hashtag/:hashtag" component={Search}/>
       </Switch>
     </Router>
   );
