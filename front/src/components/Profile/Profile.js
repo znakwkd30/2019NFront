@@ -83,15 +83,10 @@ function Profile() {
 
     const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
     const [userInfo, setUserInfo] = React.useState([]);
-    const [expanded, setExpanded] = React.useState(false);
     const [userImg, setUserImg] = React.useState();
     const [products, setProducts] = useState([]);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
-    async function searchProduct() {
+    async function myProduct() {
         let result;
         result = await Axios({
             url: 'api/product/myProduct/',
@@ -112,10 +107,23 @@ function Profile() {
         setUserImg(result.data.data.ProfileImages[0].src);
     }
 
+    function handleEdit(id) {
+        window.location.href="/";
+    }
+
+    async function handleDelete(id) {
+        let result = await Axios({
+            url: "api/product/deleteProduct/" + id,
+            headers: {"token" : window.sessionStorage.getItem("token") || window.localStorage.getItem("token")},
+            method: "delete"
+        });
+        console.log(result);
+        myProduct();
+    }
 
     React.useEffect(() => {
         getProfile();
-        searchProduct();
+        myProduct();
     }, []);
 
     if (log) {
@@ -143,10 +151,10 @@ function Profile() {
                             <CardHeader
                                 action={
                                     <div>
-                                    <IconButton aria-label="settings">
+                                    <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
                                         <EditIcon/>
                                     </IconButton>
-                                    <IconButton aria-label="settings">
+                                    <IconButton aria-label="settings" onClick={e => handleDelete(item.id)}>
                                         <DeleteIcon/>    
                                     </IconButton>
                                     </div>
@@ -162,13 +170,6 @@ function Profile() {
                                     {item.price}원
                                     </Typography>
                             </CardContent>
-                            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                <CardContent>
-                                    <Typography paragraph>상세설명 : {item.description}</Typography>
-                                    <Typography paragraph>해시태그 : <Link to={"/search/" + item.hashtag}>{item.hashtag}</Link></Typography>
-                                    <Typography paragraph>카테고리 : <Link to={"/search/" + item.category}>{item.category}</Link></Typography>
-                                </CardContent>
-                            </Collapse>
                         </Card>
                     )
                 })}
