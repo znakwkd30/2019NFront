@@ -175,7 +175,7 @@ function Main() {
                     {products.map((item, key) => {
                         return (
                             <div className={classes.margin}>
-                                <Link to={"/productinfo/" + item.id}>
+                                <Link to={"/productinfo/" + item.id} className={classes.link}>
                                     <Card className={classes.card} key={key}>
                                         <CardHeader
                                             action={

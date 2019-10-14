@@ -7,12 +7,12 @@ import Nav from '../Nav';
 
 const Axios = require("../../Axios/Axios");
 
-function ProductInfo(match){
+function ProductInfo({match}){
     const [productInfo, setProductInfo] = React.useState([]);
 
     function call(){
         console.log(match);
-        console.log(match.id);
+        console.log(match.params.id);
         console.log(productInfo);
     }
 
@@ -40,7 +40,7 @@ function ProductInfo(match){
                         autoPlay={true}
                         infiniteLoop={true}
                     >
-                        
+                        {productInfo}
                     </Carousel>
                 </div>
             </Card>

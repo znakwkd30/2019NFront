@@ -25,8 +25,8 @@ function App() {
       </Switch>
       <Route path="/product" component={Product}/>
       <Switch>
-        <Route path="/productinfo" component={ProductInfo}/>
-        <Route path="/productinfo/:id" component={ProductInfo}/>
+        <Route path="/productinfo/:id" component={ProductInfo}>
+        </Route>
       </Switch>
     </Router>
   );
