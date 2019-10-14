@@ -69,62 +69,80 @@ const useStyles = makeStyles(theme => ({
 function Main() {
     const classes = useStyles();
     const [rendering, setRendering] = useState(false);
-    const [expanded, setExpanded] = useState(false);
+    const [check, setCheck] = useState(false);
     const [products, setProducts] = useState([]);
     const [heartProducts, setHeartProducts] = useState([]);
     const [imagesPath, setImagesPath] = useState([]);
 
+    async function getBanner() {
+        let result = await Axios({
+            url: "banner",
+            method: "get",
+        })
+        setImagesPath(result.data.image);
+    }
+
+    async function getMainProduct() {
+        let result = await Axios({
+            url: 'api/product/main',
+            method: 'get'
+        })
+        setProducts(result.data.productList);
+    }
+
+    async function getHeartProduct() {
+        let result = await Axios({
+            url: "api/product/heartProductList",
+            headers: { "token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
+            method: "get",
+        })
+        setHeartProducts(result.data.productList);
+    }
+
     async function handleHeartClick(id) {
         try {
-            await Axios({
+            let result = await Axios({
                 url: "/api/heart/click/" + id,
                 headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
                 method: "post"
             })
-        } catch{
-
+            console.log(result);
+        } catch(err){
+            console.log(err);
         }
+        getMainProduct();
     }
 
     async function handleHeartUnclick(id) {
         try {
-            await Axios({
+            let result = await Axios({
                 url: "api/heart/unclick/" + id,
                 headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
                 method: "post",
             })
-        } catch{
-
+            console.log(result);
+        } catch(err){
+            console.log(err);
         }
+        getMainProduct();
     }
 
+    function checkHeartProduct(id){
+        heartProducts.map(item => {
+            console.log(id);
+            console.log(item.Product.id);
+            console.log("\n");
+            if(item.Product.id === id){
+                console.log("yes");
+                return true;
+            }
+            return false;
+        })
+    }
+
+    console.log(checkHeartProduct(60));
+
     useEffect(() => {
-        async function getBanner() {
-            let result = await Axios({
-                url: "banner",
-                method: "get",
-            })
-            setImagesPath(result.data.image);
-        }
-
-        async function getMainProduct() {
-            let result = await Axios({
-                url: 'api/product/main',
-                method: 'get'
-            })
-            setProducts(result.data.productList);
-        }
-
-        async function getHeartProduct() {
-            let result = await Axios({
-                url: "api/product/heartProductList",
-                header: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
-                method: "get",
-            })
-            console.log(result);
-            setHeartProducts(result);
-        }
-
         getBanner();
         getMainProduct();
         getHeartProduct();
@@ -174,8 +192,7 @@ function Main() {
                             </CardContent>
                             <CardActions disableSpacing>
                                 <IconButton aria-label="add to favorites">
-                                    {/* <FavoriteBorderIcon onClick={e => handleHeartClick(item.id)} /> */}
-                                    <FavoriteIcon onClick={e => handleHeartUnclick(item.id)} />
+                                    {checkHeartProduct(item.id) ? <FavoriteIcon onClick={e => handleHeartUnclick(item.id)}/> : <FavoriteBorderIcon onClick={e => handleHeartClick(item.id)} />}
                                 </IconButton>
                             </CardActions>
                         </Card>
