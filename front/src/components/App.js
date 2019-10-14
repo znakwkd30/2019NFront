@@ -9,6 +9,7 @@ import Chat from './Socket/SocketFront';
 import Profile from './Profile/Profile';
 import Search from './Search/Search';
 import Product from './Product/Product'
+import ProductInfo from './ProductInfo/ProductInfo';
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
         <Route path="/hashtag/:hashtag" component={Search}/>
       </Switch>
       <Route path="/product" component={Product}/>
+      <Switch>
+        <Route path="/productinfo" component={ProductInfo}/>
+        <Route path="/productinfo/:id" component={ProductInfo}/>
+      </Switch>
     </Router>
   );
 }
