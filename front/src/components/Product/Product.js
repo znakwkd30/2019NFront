@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import axios from 'axios';
 import Nav from '../Nav';
 import { DropzoneArea, DropzoneDialog } from 'material-ui-dropzone';
 import Avatar from '@material-ui/core/Avatar';
@@ -72,21 +73,17 @@ function Product() {
         }))
     };
 
-    const imageHandleChange = event => {   
+    const imageHandleChange = event => {
+        let item = [];
         console.log(event);
-        const fd = new FormData();
-        fd.append('image', event);
-        console.log(fd);
-        setInput(input => ({
-            ...input,
-            image: fd,
-        }))
+        for(var i = 0; i <= event.length+1 ; i++) {
+            item[i] = event;
+            setImages(item[i]);
+        }
+        console.log(images);
     }
     
-    const selectFileHandle = e => {
-        console.log(e.target.files[0]);
-        setImages(e.target.files[0]);
-    }
+    const [formImage, setFormImage] = useState(new FormData());
 
     const [input, setInput] = useState({
       productName: '',
@@ -99,31 +96,33 @@ function Product() {
 
     async function handleSumbit(e) {
         e.preventDefault();
-        const fd = new FormData();
-        fd.append('image', images);
-        let result = await Axios({
-          url: 'api/product/', fd,
-          headers: {
-              'Content-Type': 'multipart/form-data'
-          },
-          headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
-          method: 'post',
-          data: {
-            productName: input.productName,
-            description: input.description,
-            price: input.price,
-            hashtag: input.hashtag,
-            category: input.category,
-            image: fd,
-          }
+        await axios.post("http://localhost:3065/api/product/", formImage, {
+            headers: { 
+                "token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token") 
+            },
         })
-        console.log(result);
+        .then(res => {
+            console.log(res);
+        })
     }
+
+    useEffect(() => {
+        const data = new FormData();
+        data.append("productName", input.productName);
+        data.append("description", input.description);
+        data.append("price", input.price);
+        data.append("hashtag", input.hashtag);
+        data.append("category", input.category);
+        for(var i = 0 ; i <= images.length ; i++) {
+            data.append("image", images[i]);
+        }
+        setFormImage(data);
+    }, [setFormImage, input, images]);
 
     return(
         <Fragment>
             <Nav/>
-            <Grid item xs={12} sm={8} md={5} elevation={6} square>
+            <Grid item xs={12} sm={8} md={5} elevation={6} square style={{ margin: "auto" }}>
             <div className={classes.paper}>
             <Typography component="h1" variant="h5">
                 상품등록
@@ -194,20 +193,6 @@ function Product() {
                 <DropzoneArea
                     onChange={imageHandleChange}
                 />
-                <input type="file" onChange={selectFileHandle}/>
-                {/* <div>
-                    <Button onClick={handleOpen.bind(this)}>
-                    Add Image
-                    </Button>
-                    <DropzoneDialog
-                        open={false}
-                        onSave={handleSave.bind(this)}
-                        acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-                        showPreviews={true}
-                        maxFileSize={5000000}
-                        onClose={handleClose.bind(this)}
-                    />
-                </div> */}
                 <Button
                 type="submit"
                 fullWidth
