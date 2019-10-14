@@ -19,6 +19,8 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -140,9 +142,14 @@ function Profile() {
                         <Card className={classes.itemCard} key={key}>
                             <CardHeader
                                 action={
+                                    <div>
                                     <IconButton aria-label="settings">
-                                        <MoreVertIcon />
+                                        <EditIcon/>
                                     </IconButton>
+                                    <IconButton aria-label="settings">
+                                        <DeleteIcon/>    
+                                    </IconButton>
+                                    </div>
                                 }
                                 title={item.productName}
                                 subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
