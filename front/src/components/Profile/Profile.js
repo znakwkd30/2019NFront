@@ -1,21 +1,41 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Axios from '../../Axios/Axios';
 import { makeStyles } from '@material-ui/core/styles';
-
+import Time from 'react-time-format';
+import { Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
 import Nav from '../Nav';
-
 import defaultImg from '../../Assets/noImg.png';
-import { CardContent } from '@material-ui/core';
+import clsx from 'clsx';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import { red } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
+    root: {
+        display: "flex",
+        justifyContent: "center",
+        flexWrap: "wrap",
+    },
     card: {
         margin: "20px auto",
         width: "60%",
+    },
+    itemCard: {
+        margin: "20px",
+        width: 300,
+        height: 420,
     },
     main: {
         margin: "60px auto 20px",
@@ -26,10 +46,24 @@ const useStyles = makeStyles({
         width: 130,
         height: 130,
     },
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
+    expand: {
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+    },
     avatar:{
         margin: "0 auto",
         width: "50px",
         height: "50px",
+    },
+    expandOpen: {
+        transform: 'rotate(180deg)',
     },
     Typography: {
         margin: "20px 0 0 0",
@@ -42,7 +76,7 @@ const useStyles = makeStyles({
 
     },
 
-});
+}));
 
 function Profile() {
     const classes = useStyles();
@@ -50,6 +84,18 @@ function Profile() {
     const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
     const [userInfo, setUserInfo] = React.useState([]);
     const [userImg, setUserImg] = React.useState();
+    const [products, setProducts] = useState([]);
+
+    async function myProduct() {
+        let result;
+        result = await Axios({
+            url: 'api/product/myProduct/',
+            headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
+            method: 'get'
+        })
+        
+        setProducts(result.data.productList);            
+    }
 
     async function getProfile() {
         let result = await Axios({
@@ -61,9 +107,23 @@ function Profile() {
         setUserImg(result.data.data.ProfileImages[0].src);
     }
 
+    function handleEdit(id) {
+        window.location.href="/";
+    }
+
+    async function handleDelete(id) {
+        let result = await Axios({
+            url: "api/product/deleteProduct/" + id,
+            headers: {"token" : window.sessionStorage.getItem("token") || window.localStorage.getItem("token")},
+            method: "delete"
+        });
+        console.log(result);
+        myProduct();
+    }
 
     React.useEffect(() => {
         getProfile();
+        myProduct();
     }, []);
 
     if (log) {
@@ -80,24 +140,40 @@ function Profile() {
                             {userInfo.name}
                         </Typography>
                         <CardContent className={classes.cardcontent}>
-                            
                         </CardContent>
                     </div>
                 </Card>
-                <Card>
-                    <div className={classes.myproduct}>
-                            
-                    </div>
-                    <div className={classes.heartProduct}>
-                        <Avatar alt="profileImg" src={userInfo.length === 0 ? defaultImg : "http://10.80.163.141:3065/\\" + userImg} className={classes.avatar} />
-                        <Typography variant="h4" align="center">
-                            {userInfo.name}
-                        </Typography>
-                        <Button variant="contained" className={classes.button}>
-                            Default
-                        </Button>
-                    </div>
-                </Card>
+                <Typography variant="h4" align="center">내 상품</Typography>
+                <div className={classes.root} style={{ width: "80%", margin: "auto" }}> 
+                {products.map((item, key) => {
+                    return (
+                        <Card className={classes.itemCard} key={key}>
+                            <CardHeader
+                                action={
+                                    <div>
+                                    <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
+                                        <EditIcon/>
+                                    </IconButton>
+                                    <IconButton aria-label="settings" onClick={e => handleDelete(item.id)}>
+                                        <DeleteIcon/>    
+                                    </IconButton>
+                                    </div>
+                                }
+                                title={item.productName}
+                                subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
+                            />
+                            <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
+                            {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
+                            <CardContent>
+                                <Typography variant="body2" color="textSecondary" component="p"
+                                    style={{ fontSize: "24px", fontFamily: "궁서체" }}>
+                                    {item.price}원
+                                    </Typography>
+                            </CardContent>
+                        </Card>
+                    )
+                })}
+            </div>
             </Fragment>
         )
     }

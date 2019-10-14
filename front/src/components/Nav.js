@@ -82,7 +82,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Nav = ({ history }) => {
+const Nav = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -124,6 +124,12 @@ const Nav = ({ history }) => {
 
     const handleMobileMenuOpen = event => {
         setMobileMoreAnchorEl(event.currentTarget);
+    };
+
+    const handleSearch = event => {
+        if (window.event.keyCode === 13) {
+            window.location.href = "/search/" + event.target.value;
+        }
     };
 
     const menuId = 'primary-search-account-menu';
@@ -193,8 +199,7 @@ const Nav = ({ history }) => {
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                            <SearchIcon
-                                
+                            <SearchIcon                                
                             />
                         </div>
                         <InputBase
@@ -204,6 +209,7 @@ const Nav = ({ history }) => {
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
+                            onKeyUp={handleSearch}
                         />
                     </div>
                     <div className={classes.grow} />
