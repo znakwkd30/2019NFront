@@ -178,7 +178,7 @@ const Nav = () => {
             </IconButton>
             {log ? <span>Login</span> : <span>Logout</span>}
         </MenuItem>
-    </Menu>
+        </Menu>
 )
 
 

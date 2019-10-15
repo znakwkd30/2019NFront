@@ -83,7 +83,7 @@ function a11yProps(index) {
 
 function ProductInfo({ match }) {
     const classes = useStyles();
-    const [productInfo, setProductInfo] = useState([]);
+    const [productInfo, setProductInfo] = useState({});
     const [imagePath, setImagePath] = useState([]);
     const [value, setValue] = useState(0);
 
@@ -149,7 +149,7 @@ function ProductInfo({ match }) {
                             </TableBody>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell><Typography variant="h6">태그: <Link to="/search">{productInfo.hashtag}</Link></Typography></TableCell>
+                                    <TableCell><Typography variant="h6">태그: <Link to={"/hashtag/" + productInfo.hashtag}>{productInfo.hashtag}</Link></Typography></TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>

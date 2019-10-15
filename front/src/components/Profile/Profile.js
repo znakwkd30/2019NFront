@@ -7,17 +7,13 @@ import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Nav from '../Nav';
 import defaultImg from '../../Assets/noImg.png';
-import clsx from 'clsx';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -59,8 +55,8 @@ const useStyles = makeStyles(theme => ({
     },
     avatar:{
         margin: "0 auto",
-        width: "50px",
-        height: "50px",
+        width: "200px",
+        height: "200px",
     },
     expandOpen: {
         transform: 'rotate(180deg)',
@@ -75,10 +71,27 @@ const useStyles = makeStyles(theme => ({
         height: "130px",
 
     },
-
+    link: {
+        cursor: "pointer",
+        textDecoration: "none",
+        fontSize: "18px"
+    },
+    profileIcon: {
+        alignItems: "right"
+    }
 }));
 
 function Profile() {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     const classes = useStyles();
 
     const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
@@ -139,14 +152,13 @@ function Profile() {
                         <Typography variant="h3" align="center" className={classes.Typography}>
                             {userInfo.name}
                         </Typography>
-                        <CardContent className={classes.cardcontent}>
-                        </CardContent>
                     </div>
                 </Card>
                 <Typography variant="h4" align="center">내 상품</Typography>
                 <div className={classes.root} style={{ width: "80%", margin: "auto" }}> 
                 {products.map((item, key) => {
                     return (
+                        
                         <Card className={classes.itemCard} key={key}>
                             <CardHeader
                                 action={
@@ -157,9 +169,30 @@ function Profile() {
                                     <IconButton aria-label="settings" onClick={e => handleDelete(item.id)}>
                                         <DeleteIcon/>    
                                     </IconButton>
+                                    <IconButton aria-label="settings">
+                                        <MoreVertIcon/>
+                                    </IconButton>
+                                    {/* <Menu
+                                        id="simple-menu"
+                                        anchorEl={anchorEl}
+                                        keepMounted
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                    >
+                                        <MenuItem onClick={handleClose}>
+                                            <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
+                                                <EditIcon/>
+                                            </IconButton>
+                                        </MenuItem>
+                                        <MenuItem onClick={handleClose}>
+                                            <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
+                                                <EditIcon/>
+                                            </IconButton>
+                                        </MenuItem>
+                                    </Menu> */}
                                     </div>
                                 }
-                                title={item.productName}
+                                title={<Link to={"/productinfo/" + item.id} className={classes.link}>{item.productName}</Link>}
                                 subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                             />
                             <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>

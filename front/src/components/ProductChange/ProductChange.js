@@ -129,6 +129,10 @@ function ProductChange({ match }) {
         setInput(result.data.product);
     }
 
+    function handleStateChange() {
+
+    }
+
     useEffect(() => {
         const data = new FormData();
         data.append("productName", input.productName);
@@ -236,7 +240,7 @@ function ProductChange({ match }) {
                             </FormControl>
                             <DropzoneArea
                                 onChange={imageHandleChange}
-                            />            
+                            />         
                             <Button variant="contained" size="large" onClick={handleSumbit} color="primary" className={classes.payBtn}>
                                 수정하기
                             </Button>

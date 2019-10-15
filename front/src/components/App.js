@@ -11,6 +11,7 @@ import Search from './Search/Search';
 import Product from './Product/Product'
 import ProductInfo from './ProductInfo/ProductInfo';
 import ProductChange from './ProductChange/ProductChange';
+import profileChange from './ProfileChange/ProfileChange';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         </Route>
       </Switch>
       <Route path="/productChange/:id" component={ProductChange}/>
+      <Route path="/profileChange" component={profileChange}/>
     </Router>
   );
 }

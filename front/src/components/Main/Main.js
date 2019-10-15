@@ -135,12 +135,12 @@ function Main() {
     }
 
     function checkHeartProduct(id) {
-        heartProducts.map(item => {
-            if (item.Product.id === id) {
-                return true;
-            }
-        })
-        return false;
+        // heartProducts.map(item => {
+        //     if (item.Product.id === id) {
+        //         return true;
+        //     }
+        // })
+        // return false;
     }
 
     useEffect(() => {
