@@ -141,7 +141,7 @@ function Profile() {
                 headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
             })
             console.log(result);
-            setHeartProduct(result.data.productList);
+            setHeartProduct(result.data);
         } catch (err) {
             console.log(err);
         }
@@ -216,7 +216,7 @@ function Profile() {
                                             <Typography variant="body2" color="textSecondary" component="p"
                                                 style={{ fontSize: "24px", fontFamily: "궁서체" }}>
                                                 {item.price}원
-                                    </Typography>
+                                            </Typography>
                                         </CardContent>
                                     </Card>
                                 )
@@ -252,7 +252,7 @@ function Profile() {
                                             <Typography variant="body2" color="textSecondary" component="p"
                                                 style={{ fontSize: "24px", fontFamily: "궁서체" }}>
                                                 {item.price}원
-                                        </Typography>
+                                            </Typography>
                                         </CardContent>
                                     </Card>
                                 )
