@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     margin: {
         margin: "20px",
         width: 350,
-        height: 420,
+        height: 380,
     },
     link: {
         cursor: "pointer",
@@ -186,13 +186,8 @@ function Main() {
                                             <Typography variant="body2" color="textSecondary" component="p"
                                                 style={{ fontSize: "24px", fontFamily: "궁서체" }}>
                                                 {item.price}원
-                                    </Typography>
+                                            </Typography>
                                         </CardContent>
-                                        <CardActions disableSpacing>
-                                            <IconButton aria-label="add to favorites">
-                                                {checkHeartProduct(item.id) ? <FavoriteIcon onClick={e => handleHeartUnclick(item.id)} /> : <FavoriteBorderIcon onClick={e => handleHeartClick(item.id)} />}
-                                            </IconButton>
-                                        </CardActions>
                                     </Card>
                                 </Link>
                             </div>
