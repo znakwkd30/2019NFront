@@ -2,12 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react';
 import Axios from '../../Axios/Axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Time from 'react-time-format';
-import { Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Nav from '../Nav';
 import defaultImg from '../../Assets/noImg.png';
@@ -17,6 +14,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     },
     itemCard: {
         margin: "20px",
-        width: 300,
+        width: 350,
         height: 420,
     },
     main: {
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
             duration: theme.transitions.duration.shortest,
         }),
     },
-    avatar:{
+    avatar: {
         margin: "0 auto",
         width: "200px",
         height: "200px",
@@ -69,7 +69,6 @@ const useStyles = makeStyles(theme => ({
         width: "80%",
         margin: "0 auto",
         height: "130px",
-
     },
     link: {
         cursor: "pointer",
@@ -80,6 +79,30 @@ const useStyles = makeStyles(theme => ({
         alignItems: "right"
     }
 }));
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <Typography
+            component="div"
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            <Box p={3}>{children}</Box>
+        </Typography>
+    );
+}
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
 
 function Profile() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -96,38 +119,58 @@ function Profile() {
 
     const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
     const [userInfo, setUserInfo] = React.useState([]);
+    const [heartProduct, setHeartProduct] = React.useState([]);
     const [userImg, setUserImg] = React.useState();
     const [products, setProducts] = useState([]);
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     async function myProduct() {
         let result;
         result = await Axios({
             url: 'api/product/myProduct/',
-            headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
+            headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
             method: 'get'
         })
-        
-        setProducts(result.data.productList);            
+
+        setProducts(result.data.productList);
     }
 
     async function getProfile() {
         let result = await Axios({
             url: "api/user/userinfo",
-            headers: {"token" : window.sessionStorage.getItem("token") || window.localStorage.getItem("token")},
+            headers: { "token": window.sessionStorage.getItem("token") || window.localStorage.getItem("token") },
         });
 
         setUserInfo(result.data.data);
         setUserImg(result.data.data.ProfileImages[0].src);
     }
 
+    async function getHeartProduct() {
+        try {
+            let result = await Axios({
+                url: "api/product/heartProductList",
+                method: "get",
+                headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
+            })
+            console.log(result);
+            setHeartProduct(result.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     function handleEdit(id) {
-        window.location.href="/productChange/" + id;
+        window.location.href = "/productChange/" + id;
     }
 
     async function handleDelete(id) {
         let result = await Axios({
             url: "api/product/deleteProduct/" + id,
-            headers: {"token" : window.sessionStorage.getItem("token") || window.localStorage.getItem("token")},
+            headers: { "token": window.sessionStorage.getItem("token") || window.localStorage.getItem("token") },
             method: "delete"
         });
         console.log(result);
@@ -137,6 +180,7 @@ function Profile() {
     React.useEffect(() => {
         getProfile();
         myProduct();
+        getHeartProduct();
     }, []);
 
     if (log) {
