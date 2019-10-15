@@ -54,7 +54,7 @@ function Product() {
 
     const [values, setValues] = React.useState({
         category: '',
-      });
+    });
     
     const inputLabel = React.useRef(null);
     const [labelWidth, setLabelWidth] = React.useState(0);
@@ -83,7 +83,7 @@ function Product() {
         console.log(images);
     }
     
-    const [formImage, setFormImage] = useState(new FormData());
+    const [form, setForm] = useState(new FormData());
 
     const [input, setInput] = useState({
       productName: '',
@@ -96,7 +96,7 @@ function Product() {
 
     async function handleSumbit(e) {
         e.preventDefault();
-        await axios.post("http://localhost:3065/api/product/", formImage, {
+        await axios.post("http://localhost:3065/api/product/", form, {
             headers: { 
                 "token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token") 
             },
@@ -116,8 +116,8 @@ function Product() {
         for(var i = 0 ; i <= images.length ; i++) {
             data.append("image", images[i]);
         }
-        setFormImage(data);
-    }, [setFormImage, input, images]);
+        setForm(data);
+    }, [setForm, input, images]);
 
     return(
         <Fragment>

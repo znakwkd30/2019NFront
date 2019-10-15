@@ -10,6 +10,7 @@ import Profile from './Profile/Profile';
 import Search from './Search/Search';
 import Product from './Product/Product'
 import ProductInfo from './ProductInfo/ProductInfo';
+import ProductChange from './ProductChange/ProductChange';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/productinfo/:id" component={ProductInfo}>
         </Route>
       </Switch>
+      <Route path="/productChange/:id" component={ProductChange}/>
     </Router>
   );
 }

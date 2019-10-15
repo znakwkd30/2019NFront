@@ -18,6 +18,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import defaultImg from '../../Assets/noImg.png'
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: "flex",
@@ -44,6 +46,10 @@ const useStyles = makeStyles(theme => ({
     },
     avatar: {
         backgroundColor: red[500],
+    },
+    link: {
+        cursor: "pointer",
+        textDecoration: "none",
     },
     }));
 
@@ -84,16 +90,13 @@ function Search({match}){
             <div className={classes.root} style={{ width: "80%", margin: "auto" }}> 
                 {products.map((item, key) => {
                     return (
+                        <Link to={"/productinfo/" + item.id} className={classes.link}>
                         <Card className={classes.card} key={key}>
                             <CardHeader
-                                action={
-                                    <IconButton aria-label="settings">
-                                        <MoreVertIcon />
-                                    </IconButton>
-                                }
                                 title={item.productName}
                                 subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                             />
+                            {/* <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
                             {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p"
@@ -105,25 +108,9 @@ function Search({match}){
                                 <IconButton aria-label="add to favorites">
                                     <FavoriteIcon />
                                 </IconButton>
-                                <IconButton
-                                    className={clsx(classes.expand, {
-                                        [classes.expandOpen]: expanded,
-                                    })}
-                                    onClick={handleExpandClick}
-                                    aria-expanded={expanded}
-                                    aria-label="show more"
-                                >
-                                    <ExpandMoreIcon />
-                                </IconButton>
                             </CardActions>
-                            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                <CardContent>
-                                    <Typography paragraph>상세설명 : {item.description}</Typography>
-                                    <Typography paragraph>해시태그 : <Link to={"/search/" + item.hashtag}>{item.hashtag}</Link></Typography>
-                                    <Typography paragraph>카테고리 : <Link to={"/search/" + item.category}>{item.category}</Link></Typography>
-                                </CardContent>
-                            </Collapse>
                         </Card>
+                        </Link>
                     )
                 })}
             </div>
