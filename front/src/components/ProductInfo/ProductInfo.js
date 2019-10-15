@@ -123,6 +123,9 @@ function ProductInfo({ match }) {
     const [imagePath, setImagePath] = useState([]);
     const [value, setValue] = useState(0);
 
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState([]);
+
     async function getProductInfo() {
         let result = await Axios({
             url: "api/product/detail/" + match.params.id,
