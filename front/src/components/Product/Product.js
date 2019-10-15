@@ -2,22 +2,15 @@ import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 import Nav from '../Nav';
 import { DropzoneArea, DropzoneDialog } from 'material-ui-dropzone';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Upload from 'material-ui-upload/Upload';
 import { makeStyles } from '@material-ui/core/styles';
-
-const Axios = require('../../Axios/Axios');
 
 const useStyles = makeStyles(theme => ({
     root: {
