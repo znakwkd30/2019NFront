@@ -16,6 +16,10 @@ import Button from '@material-ui/core/Button';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import Input from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/IconButton';
+
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import Nav from '../Nav';
 import defaultImg from '../../Assets/noImg.png';
@@ -54,6 +58,38 @@ const useStyles = makeStyles(theme => ({
     menu: {
         margin: "auto",
         width: "80%",
+    },
+    form: {
+        width: "100%",
+        display: "flex",
+    },
+    input: {
+        width: "90%",
+        margin: "10px",
+    },
+    button: {
+        margin: "10px",
+        width: "10%",
+        boxSizing: "border-box",
+    },
+    comment: {
+        width: "100%",
+        borderBottom: "1px solid black",
+        padding: "20px",
+        boxSizing: "border-box",
+        display: "flex",
+    },
+    user: {
+        width: "8%",
+        fontWeight: "bold",
+        marginRight: 10,
+    },
+    remove: {
+        width: 24,
+        float: "right",
+    },
+    removeBtn: {
+        padding: 0,
     }
 }))
 
@@ -84,6 +120,8 @@ function a11yProps(index) {
 function ProductInfo({ match }) {
     const classes = useStyles();
     const [productInfo, setProductInfo] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState([]);
     const [imagePath, setImagePath] = useState([]);
     const [value, setValue] = useState(0);
 
@@ -97,12 +135,49 @@ function ProductInfo({ match }) {
         setImagePath(result.data.product.Images);
     }
 
+    async function getComments() {
+        let result = await Axios({
+            url: "api/comment/list/" + match.params.id,
+            method: "get",
+            headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
+        })
+        console.log(result);
+        setComments(result.data);
+    }
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    async function submitComment(){
+        let result = await Axios({
+            url: "api/comment/createComment/" + match.params.id,
+            method: "post",
+            headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
+            data: {
+                content: newComment
+            }
+        })
+        getComments();
+    }
+
+    async function remove(id){
+        try{
+            let result = await Axios({
+                url: "api/comment/deleteComment/" + id,
+                method: "delete",
+                headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")}
+            })
+            console.log(result);
+            getComments();
+        }catch(err){
+            alert("자신의 댓글만 삭제할 수 있습니다.");
+        }
+    }
+
     useEffect(() => {
         getProductInfo();
+        getComments();
     }, [])
 
     return (
@@ -160,11 +235,50 @@ function ProductInfo({ match }) {
                 </div>
             </Card>
             <Paper square className={classes.menu}>
-                    <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                        <Tab label="상세 정보" {...a11yProps(0)} />
-                    </Tabs>
+                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+                    <Tab label="상세 정보" {...a11yProps(0)} />
+                    <Tab label="댓글" {...a11yProps(1)} />
+                </Tabs>
                 <TabPanel value={value} index={0}>
                     {productInfo.description}
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <div className={classes.form}>
+                        <Input
+                            defaultValue=""
+                            placeholder="댓글 입력"
+                            className={classes.input}
+                            onBlur={e => {
+                                setNewComment(e.target.value);
+                            }}
+                            inputProps={{
+                                'aria-label': 'description',
+                            }}
+                        />
+                        <Button variant="contained" color="primary" onClick={submitComment} className={classes.button}>
+                            전송
+                        </Button>
+                    </div>
+                    <hr/>
+                    <div>
+                        {comments.map(item => {
+                            return(
+                                <div className={classes.comment}>
+                                    <div className={classes.user}>
+                                        <span>{item.UserId}</span>
+                                    </div>
+                                    <div className={classes.text}>
+                                        <span>{item.content}</span>
+                                    </div>
+                                    <div className={classes.remove}>
+                                        <IconButton onClick={e => remove(item.id)} className={classes.removeBtn}>
+                                            <DeleteIcon/>
+                                        </IconButton>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
                 </TabPanel>
             </Paper>
         </Fragment>
