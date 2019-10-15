@@ -144,7 +144,7 @@ function Profile() {
     }
 
     function handleEdit(id) {
-        window.location.href = "/";
+        window.location.href="/productChange/" + id;
     }
 
     async function handleDelete(id) {

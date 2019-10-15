@@ -178,11 +178,6 @@ function Main() {
                                 <Link to={"/productinfo/" + item.id} className={classes.link}>
                                     <Card className={classes.card} key={key}>
                                         <CardHeader
-                                            action={
-                                                <IconButton aria-label="settings">
-                                                    <MoreVertIcon />
-                                                </IconButton>
-                                            }
                                             title={item.productName}
                                             subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                                         />

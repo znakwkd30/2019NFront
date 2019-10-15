@@ -144,7 +144,7 @@ function ProductInfo({ match }) {
                             </TableBody>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell><Typography variant="h6">카테고리: <Link to="/search">{productInfo.category}</Link></Typography></TableCell>
+                                    <TableCell><Typography variant="h6">카테고리: <Link to={"/search/" + productInfo.category}>{productInfo.category}</Link></Typography></TableCell>
                                 </TableRow>
                             </TableBody>
                             <TableBody>
