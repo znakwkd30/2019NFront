@@ -76,26 +76,26 @@ const useStyles = makeStyles(theme => ({
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
-  
+
     return (
-      <Typography
-        component="div"
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        <Box p={3}>{children}</Box>
-      </Typography>
+        <Typography
+            component="div"
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            <Box p={3}>{children}</Box>
+        </Typography>
     );
-  }
+}
 
 function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
 }
 
 function Profile() {
@@ -133,18 +133,22 @@ function Profile() {
         setUserImg(result.data.data.ProfileImages[0].src);
     }
 
-    async function getHeartProduct(){
-        let result = await Axios({
-            url: "api/product/heartProductList",
-            method: "get",
-            headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")}
-        })
-        console.log(result);
-        // setHeartProduct(result.data.productList);
+    async function getHeartProduct() {
+        try {
+            let result = await Axios({
+                url: "api/product/heartProductList",
+                method: "get",
+                headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
+            })
+            console.log(result);
+            setHeartProduct(result.data.productList);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     function handleEdit(id) {
-        window.location.href="/productChange/" + id;
+        window.location.href = "/productChange/" + id;
     }
 
     async function handleDelete(id) {
@@ -186,65 +190,75 @@ function Profile() {
                 </Tabs>
                 <TabPanel value={value} index={0}>
                     <div className={classes.root} style={{ width: "80%", margin: "auto" }}>
-                        {products.map((item, key) => {
-                            return (
-                                <Card className={classes.itemCard} key={key}>
-                                    <CardHeader
-                                        action={
-                                            <div>
-                                                <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
-                                                    <EditIcon />
-                                                </IconButton>
-                                                <IconButton aria-label="settings" onClick={e => handleDelete(item.id)}>
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </div>
-                                        }
-                                        title={item.productName}
-                                        subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
-                                    />
-                                    <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
-                                    {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
-                                    <CardContent>
-                                        <Typography variant="body2" color="textSecondary" component="p"
-                                            style={{ fontSize: "24px", fontFamily: "궁서체" }}>
-                                            {item.price}원
+                        {products.length === 0 ?
+                            <span>등록된 상품이 없습니다</span>
+                            :
+                            products.map((item, key) => {
+                                return (
+                                    <Card className={classes.itemCard} key={key}>
+                                        <CardHeader
+                                            action={
+                                                <div>
+                                                    <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
+                                                        <EditIcon />
+                                                    </IconButton>
+                                                    <IconButton aria-label="settings" onClick={e => handleDelete(item.id)}>
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </div>
+                                            }
+                                            title={item.productName}
+                                            subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
+                                        />
+                                        <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
+                                        {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
+                                        <CardContent>
+                                            <Typography variant="body2" color="textSecondary" component="p"
+                                                style={{ fontSize: "24px", fontFamily: "궁서체" }}>
+                                                {item.price}원
                                     </Typography>
-                                    </CardContent>
-                                </Card>
-                            )
-                        })}
+                                        </CardContent>
+                                    </Card>
+                                )
+                            })
+                        }
                     </div>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                {heartProduct.map((item, key) => {
-                            return (
-                                <Card className={classes.itemCard} key={key}>
-                                    <CardHeader
-                                        action={
-                                            <div>
-                                                <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
-                                                    <EditIcon />
-                                                </IconButton>
-                                                <IconButton aria-label="settings" onClick={e => handleDelete(item.id)}>
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </div>
-                                        }
-                                        title={item.productName}
-                                        subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
-                                    />
-                                    <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
-                                    {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
-                                    <CardContent>
-                                        <Typography variant="body2" color="textSecondary" component="p"
-                                            style={{ fontSize: "24px", fontFamily: "궁서체" }}>
-                                            {item.price}원
-                                    </Typography>
-                                    </CardContent>
-                                </Card>
-                            )
-                        })}
+                    <div className={classes.root} style={{ width: "80%", margin: "auto" }}>
+                        {heartProduct.length === 0 ?
+                            <span>찜한 상품이 없습니다</span>
+                            :
+                            heartProduct.map((item, key) => {
+                                return (
+                                    <Card className={classes.itemCard} key={key}>
+                                        <CardHeader
+                                            action={
+                                                <div>
+                                                    <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
+                                                        <EditIcon />
+                                                    </IconButton>
+                                                    <IconButton aria-label="settings" onClick={e => handleDelete(item.id)}>
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </div>
+                                            }
+                                            title={item.productName}
+                                            subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
+                                        />
+                                        <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
+                                        {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
+                                        <CardContent>
+                                            <Typography variant="body2" color="textSecondary" component="p"
+                                                style={{ fontSize: "24px", fontFamily: "궁서체" }}>
+                                                {item.price}원
+                                        </Typography>
+                                        </CardContent>
+                                    </Card>
+                                )
+                            })
+                        }
+                    </div>
                 </TabPanel>
             </Fragment>
         )
