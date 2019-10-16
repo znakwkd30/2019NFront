@@ -17,7 +17,8 @@ import Menu from '@material-ui/core/Menu';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -187,15 +188,6 @@ function Profile() {
         myProduct();
     }
 
-    const addMenu = () => {
-        setMenu([
-            ...menu,
-            {
-                t: "",
-            }
-        ])
-    }
-
     React.useEffect(() => {
         getProfile();
         myProduct();
@@ -236,20 +228,12 @@ function Profile() {
                                     <CardHeader
                                         action={
                                             <div>
-                                                <IconButton aria-label="settings" onClick={menuOpen}>
-                                                    <MoreVertIcon />
+                                                <IconButton aria-label="edit" onClick={e => window.location.href = "/productChange/" + item.id}>
+                                                    <EditIcon />
                                                 </IconButton>
-                                                <Menu
-                                                    id="simple-menu"
-                                                    anchorEl={menu}
-                                                    keepMounted
-                                                    open={Boolean(menu)}
-                                                    onClose={menuClose}
-                                                >
-                                                    <MenuItem onClick={menuClose}>Profile</MenuItem>
-                                                    <MenuItem onClick={menuClose}>My account</MenuItem>
-                                                    <MenuItem onClick={menuClose}>Logout</MenuItem>
-                                                </Menu>
+                                                <IconButton aria-label="remove" onClick={e => handleDelete(item.id)}>
+                                                    <DeleteIcon/>
+                                                </IconButton>
                                             </div>
                                         }
                                         title={<Link to={"/productinfo/" + item.id} className={classes.link}>{item.productName}</Link>}
@@ -274,13 +258,6 @@ function Profile() {
                             return (
                                 <Card className={classes.itemCard} key={key}>
                                     <CardHeader
-                                        action={
-                                            <div>
-                                                <IconButton aria-label="settings">
-                                                    <MoreVertIcon />
-                                                </IconButton>
-                                            </div>
-                                        }
                                         title={<Link to={"/productinfo/" + item.id} className={classes.link}>{item.productName}</Link>}
                                         subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                                     />

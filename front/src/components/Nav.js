@@ -12,6 +12,15 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 
 import ForumIcon from '@material-ui/icons/Forum';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -80,6 +89,13 @@ const useStyles = makeStyles(theme => ({
             display: 'none',
         },
     },
+    drawerLink: {
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        textDecoration: "none",
+        color: "black",
+    }
 }));
 
 const Nav = () => {
@@ -87,6 +103,12 @@ const Nav = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
+    const [state, setState] = React.useState({
+        top: false,
+        left: false,
+        bottom: false,
+        right: false,
+    });
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -105,9 +127,9 @@ const Nav = () => {
     };
 
     const handleProfile = () => {
-        if(log){
+        if (log) {
             alert("로그인이 필요한 서비스입니다.");
-        }else{
+        } else {
             window.location.href = "/profile";
         }
     }
@@ -153,7 +175,16 @@ const Nav = () => {
         </Menu>
     );
 
+    const toggleDrawer = (side, open) => event => {
+        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+
+        setState({ ...state, [side]: open });
+    };
+
     const mobileMenuId = 'primary-search-account-menu-mobile';
+
     const renderMobileMenu = (
         <Menu
             anchorEl={mobileMoreAnchorEl}
@@ -164,28 +195,81 @@ const Nav = () => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-        <MenuItem>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                    <ForumIcon />
-                </Badge>
-            </IconButton>
-            <p>Messages</p>
-        </MenuItem>
-        <MenuItem onClick={log ? handleLogin : handleLogout}>
-            <IconButton
-                aria-label="account of current user"
-                aria-controls="primary-search-account-menu"
-                aria-haspopup="true"
-                color="inherit"
-            >
-                <AccountCircle />
-            </IconButton>
-            {log ? <span>Login</span> : <span>Logout</span>}
-        </MenuItem>
+            <MenuItem>
+                <IconButton aria-label="show 4 new mails" color="inherit">
+                    <Badge badgeContent={4} color="secondary">
+                        <ForumIcon />
+                    </Badge>
+                </IconButton>
+                <p>Messages</p>
+            </MenuItem>
+            <MenuItem onClick={log ? handleLogin : handleLogout}>
+                <IconButton
+                    aria-label="account of current user"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                {log ? <span>Login</span> : <span>Logout</span>}
+            </MenuItem>
         </Menu>
-)
+    )
 
+    const sideList = side => (
+        <div
+            className={classes.list}
+            role="presentation"
+            onClick={toggleDrawer(side, false)}
+            onKeyDown={toggleDrawer(side, false)}
+        >
+            <List>
+                <ListItem button>
+                    <Link to="/search/의류" className={classes.drawerLink}>
+                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/tailoring-for-women.png" /></ListItemIcon>
+                        <ListItemText primary="의류" />
+                    </Link>
+                </ListItem>
+                <ListItem button>
+                    <Link to="/search/전자기기" className={classes.drawerLink}>
+                        <ListItemIcon><img src="https://img.icons8.com/pastel-glyph/30/000000/iphone-x--v1.png" /></ListItemIcon>
+                        <ListItemText primary="전자기기" />
+                    </Link>
+                </ListItem>
+                <ListItem button>
+                    <Link to="/search/도서" className={classes.drawerLink}>
+                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/book.png" /></ListItemIcon>
+                        <ListItemText primary="도서" />
+                    </Link>
+                </ListItem>
+                <ListItem button>
+                    <Link to="/search/굿즈" className={classes.drawerLink}>
+                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/fantasy.png" /></ListItemIcon>
+                        <ListItemText primary="굿즈" />
+                    </Link>
+                </ListItem>
+                <ListItem button>
+                    <Link to="/search/뷰티" className={classes.drawerLink}>
+                        <ListItemIcon><img src="https://img.icons8.com/metro/30/000000/beeswax.png" /></ListItemIcon>
+                        <ListItemText primary="뷰티" />
+                    </Link>
+                </ListItem>
+                <ListItem button>
+                    <Link to="/search/나눔" className={classes.drawerLink}>
+                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/gift.png" /></ListItemIcon>
+                        <ListItemText primary="나눔" />
+                    </Link>
+                </ListItem>
+                <ListItem button>
+                    <Link to="/search/기타" className={classes.drawerLink}>
+                        <ListItemIcon><img src="https://img.icons8.com/ios-glyphs/30/000000/more.png" /></ListItemIcon>
+                        <ListItemText primary="기타" />
+                    </Link>
+                </ListItem>
+            </List>
+        </div>
+    );
 
     return (
         <div className={classes.grow}>
@@ -196,15 +280,23 @@ const Nav = () => {
                         className={classes.menuButton}
                         color="inherit"
                         aria-label="open drawer"
+                        onClick={toggleDrawer("left", true)}
                     >
-                    <MenuIcon />
+                        <MenuIcon />
                     </IconButton>
+                    <SwipeableDrawer
+                        open={state.left}
+                        onClose={toggleDrawer('left', false)}
+                        onOpen={toggleDrawer('left', true)}
+                    >
+                        {sideList('left')}
+                    </SwipeableDrawer>
                     <Typography className={classes.title} variant="h6" noWrap>
                         <Link to="/">凝安該</Link>
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                            <SearchIcon                                
+                            <SearchIcon
                             />
                         </div>
                         <InputBase
