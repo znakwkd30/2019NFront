@@ -126,14 +126,17 @@ function ProductInfo({ match }) {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState([]);
 
-    async function getProductInfo() {
-        let result = await Axios({
+    function getProductInfo() {
+        Axios({
             url: "api/product/detail/" + match.params.id,
             method: "get",
             headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
-        });
-        setProductInfo(result.data.product);
-        setImagePath(result.data.product.Images);
+        })
+        .then(result => {
+            setProductInfo(result.data.product);
+            setImagePath(result.data.product.Images);
+            setHash();
+        })
     }
 
     async function getComments() {
@@ -174,6 +177,14 @@ function ProductInfo({ match }) {
         }catch(err){
             alert("자신의 댓글만 삭제할 수 있습니다.");
         }
+    }
+
+    const [hashtag, setHashtag] = useState();
+    const setHash = () => {
+        console.log(productInfo);
+        let hash = (String)(productInfo.hashtag).split("#");
+        console.log(hash);
+        setHashtag(hash);
     }
 
     useEffect(() => {
@@ -225,7 +236,7 @@ function ProductInfo({ match }) {
                             </TableBody>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell><Typography variant="h6">태그: <Link to={"/hashtag/" + productInfo.hashtag}>{productInfo.hashtag}</Link></Typography></TableCell>
+                                    <TableCell><Typography variant="h6">태그: <Link to={"/hashtag/" + (String)(productInfo.hashtag).split("#")}>{productInfo.hashtag}</Link></Typography></TableCell>
                                 </TableRow>
                             </TableBody>
                             <TableBody>

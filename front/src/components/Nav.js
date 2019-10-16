@@ -132,6 +132,10 @@ const Nav = () => {
         }
     };
 
+    const handleReport = () => {
+        alert("준비중입니다.");
+    }
+
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -143,8 +147,9 @@ const Nav = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleProfile}>Profile</MenuItem>
-            <MenuItem onClick={log ? handleLogin : handleLogout}>{log ? <span>Login</span> : <span>Logout</span> }</MenuItem>
+            <MenuItem onClick={handleProfile}>프로필</MenuItem>
+            <MenuItem onClick={log ? handleLogin : handleLogout}>{log ? <span>로그인</span> : <span>로그아웃</span> }</MenuItem>
+            <MenuItem onClick={handleReport}>신고하기</MenuItem>
         </Menu>
     );
 
