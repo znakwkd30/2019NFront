@@ -12,12 +12,12 @@ import defaultImg from '../../Assets/noImg.png';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import Box from '@material-ui/core/Box';
+import Menu from '@material-ui/core/Menu';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
+
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -47,29 +47,17 @@ const useStyles = makeStyles(theme => ({
         height: 0,
         paddingTop: '56.25%', // 16:9
     },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
     avatar: {
         margin: "0 auto",
         width: "200px",
         height: "200px",
     },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
     Typography: {
         margin: "20px 0 0 0",
-
     },
     myproduct: {
-        width: "80%",
+        width: "60%",
         margin: "0 auto",
-        height: "130px",
     },
     link: {
         cursor: "pointer",
@@ -106,16 +94,6 @@ function a11yProps(index) {
 }
 
 function Profile() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
     const classes = useStyles();
 
     const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
@@ -124,10 +102,43 @@ function Profile() {
     const [userImg, setUserImg] = React.useState();
     const [products, setProducts] = useState([]);
     const [value, setValue] = React.useState(0);
+    const [menu, setMenu] = React.useState(null);
+
+    const menuOpen = event => {
+        setMenu(event.currentTarget);
+    };
+
+    const menuClose = () => {
+        setMenu(null);
+    };
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    function TabPanel(props) {
+        const { children, value, index, ...other } = props;
+
+        return (
+            <Typography
+                component="div"
+                role="tabpanel"
+                hidden={value !== index}
+                id={`simple-tabpanel-${index}`}
+                aria-labelledby={`simple-tab-${index}`}
+                {...other}
+            >
+                <Box p={3}>{children}</Box>
+            </Typography>
+        );
+    }
+
+    function a11yProps(index) {
+        return {
+            id: `simple-tab-${index}`,
+            'aria-controls': `simple-tabpanel-${index}`,
+        };
+    }
 
     async function myProduct() {
         let result;
@@ -157,7 +168,6 @@ function Profile() {
                 method: "get",
                 headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
             })
-            console.log(result);
             setHeartProduct(result.data);
         } catch (err) {
             console.log(err);
@@ -199,59 +209,86 @@ function Profile() {
                         </Typography>
                     </div>
                 </Card>
-                <Typography variant="h4" align="center">내 상품</Typography>
-                <div className={classes.root} style={{ width: "80%", margin: "auto" }}> 
-                {products.map((item, key) => {
-                    return (
-                        
-                        <Card className={classes.itemCard} key={key}>
-                            <CardHeader
-                                action={
-                                    <div>
-                                    <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
-                                        <EditIcon/>
-                                    </IconButton>
-                                    <IconButton aria-label="settings" onClick={e => handleDelete(item.id)}>
-                                        <DeleteIcon/>    
-                                    </IconButton>
-                                    <IconButton aria-label="settings">
-                                        <MoreVertIcon/>
-                                    </IconButton>
-                                    {/* <Menu
-                                        id="simple-menu"
-                                        anchorEl={anchorEl}
-                                        keepMounted
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleClose}
-                                    >
-                                        <MenuItem onClick={handleClose}>
-                                            <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
-                                                <EditIcon/>
-                                            </IconButton>
-                                        </MenuItem>
-                                        <MenuItem onClick={handleClose}>
-                                            <IconButton aria-label="settings" onClick={e => handleEdit(item.id)}>
-                                                <EditIcon/>
-                                            </IconButton>
-                                        </MenuItem>
-                                    </Menu> */}
-                                    </div>
-                                }
-                                title={<Link to={"/productinfo/" + item.id} className={classes.link}>{item.productName}</Link>}
-                                subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
-                            />
-                            <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
-                            {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
-                            <CardContent>
-                                <Typography variant="body2" color="textSecondary" component="p"
-                                    style={{ fontSize: "24px", fontFamily: "궁서체" }}>
-                                    {item.price}원
+                <Tabs
+                    value={value}
+                    className={classes.myproduct}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    onChange={handleChange}
+                    aria-label="disabled tabs example"
+                >
+                    <Tab label="내 상품" {...a11yProps(0)} />
+                    <Tab label="찜한 상품" {...a11yProps(1)} />
+                </Tabs>
+                <TabPanel value={value} index={0}>
+                    <div className={classes.root} style={{ width: "80%", margin: "auto" }}>
+                        {products.map((item, key) => {
+                            return (
+                                <Card className={classes.itemCard} key={key}>
+                                    <CardHeader
+                                        action={
+                                            <div>
+                                                <IconButton aria-label="settings" onClick={menuOpen}>
+                                                    <MoreVertIcon />
+                                                </IconButton>
+                                                <Menu
+                                                    id="simple-menu"
+                                                    anchorEl={menu}
+                                                    keepMounted
+                                                    open={Boolean(menu)}
+                                                    onClose={menuClose}
+                                                >
+                                                    <MenuItem onClick={menuClose}>Profile</MenuItem>
+                                                    <MenuItem onClick={menuClose}>My account</MenuItem>
+                                                    <MenuItem onClick={menuClose}>Logout</MenuItem>
+                                                </Menu>
+                                            </div>
+                                        }
+                                        title={<Link to={"/productinfo/" + item.id} className={classes.link}>{item.productName}</Link>}
+                                        subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
+                                    />
+                                    <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
+                                    {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
+                                    <CardContent>
+                                        <Typography variant="body2" color="textSecondary" component="p"
+                                            style={{ fontSize: "24px", fontFamily: "궁서체" }}>
+                                            {item.price}원
                                     </Typography>
-                            </CardContent>
-                        </Card>
-                    )
-                })}
-            </div>
+                                    </CardContent>
+                                </Card>
+                            )
+                        })}
+                    </div>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <div className={classes.root} style={{ width: "80%", margin: "auto" }}>
+                        {heartProduct.map((item, key) => {
+                            return (
+                                <Card className={classes.itemCard} key={key}>
+                                    <CardHeader
+                                        action={
+                                            <div>
+                                                <IconButton aria-label="settings">
+                                                    <MoreVertIcon />
+                                                </IconButton>
+                                            </div>
+                                        }
+                                        title={<Link to={"/productinfo/" + item.id} className={classes.link}>{item.productName}</Link>}
+                                        subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
+                                    />
+                                    <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
+                                    {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
+                                    <CardContent>
+                                        <Typography variant="body2" color="textSecondary" component="p"
+                                            style={{ fontSize: "24px", fontFamily: "궁서체" }}>
+                                            {item.price}원
+                                    </Typography>
+                                    </CardContent>
+                                </Card>
+                            )
+                        })}
+                    </div>
+                </TabPanel>
             </Fragment>
         )
     }
