@@ -236,7 +236,7 @@ function ProductInfo({ match }) {
                             </TableBody>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell><Typography variant="h6">태그: <Link to={"/hashtag/" + (String)(productInfo.hashtag).split("#")}>{productInfo.hashtag}</Link></Typography></TableCell>
+                                    <TableCell><Typography variant="h6">태그: <Link to={"/hashtag/" + (String)(productInfo.hashtag).substring(1)}>{productInfo.hashtag}</Link></Typography></TableCell>
                                 </TableRow>
                             </TableBody>
                             <TableBody>
