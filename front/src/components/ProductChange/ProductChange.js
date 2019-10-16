@@ -1,16 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import Time from 'react-time-format';
-import {
-    Link
-} from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
-import { DropzoneArea, DropzoneDialog } from 'material-ui-dropzone';
+import { DropzoneArea } from 'material-ui-dropzone';
 import axios from 'axios';
 import Card from '@material-ui/core/Card';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -19,7 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import Nav from '../Nav';
 import defaultImg from '../../Assets/noImg.png';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 const Axios = require("../../Axios/Axios");
 
