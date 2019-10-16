@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Carousel } from 'react-responsive-carousel';
-import { DropzoneArea, DropzoneDialog } from 'material-ui-dropzone';
+import { DropzoneArea } from 'material-ui-dropzone';
 import axios from 'axios';
 import Card from '@material-ui/core/Card';
 import Paper from '@material-ui/core/Paper';
