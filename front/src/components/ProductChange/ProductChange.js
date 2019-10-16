@@ -66,8 +66,19 @@ function ProductChange({ match }) {
         setInput(input => ({
             ...input,
             category: event.target.value      
-        }))
+        }));
     };
+
+    const stateChange = event => {
+        setValues(oldValues => ({
+            ...oldValues,
+            [event.target.name]: event.target.value,
+        }));
+        setInput(input => ({
+            ...input,
+            state: event.target.value,
+        }));
+    }
 
     const imageHandleChange = event => {
         let item = [];
@@ -100,6 +111,7 @@ function ProductChange({ match }) {
       price: '',
       hashtag: '',
       category: '',
+      state: '',
     });
 
     const [images, setImages] = useState('');
@@ -135,6 +147,7 @@ function ProductChange({ match }) {
         data.append("price", input.price);
         data.append("hashtag", input.hashtag);
         data.append("category", input.category);
+        data.append("state", input.state)
         for(var i = 0 ; i <= images.length ; i++) {
             data.append("image", images[i]);
         }
@@ -231,6 +244,24 @@ function ProductChange({ match }) {
                                 <MenuItem value={"뷰티"}>뷰티</MenuItem>
                                 <MenuItem value={"나눔"}>나눔</MenuItem>
                                 <MenuItem value={"기타"}>기타</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <FormControl variant="outlined" className={classes.formControl}>
+                                <InputLabel ref={inputLabel} htmlFor="outlined-age-simple">
+                                    상품상태
+                                </InputLabel>
+                                <Select
+                                value={values.state}
+                                onChange={stateChange}
+                                labelWidth={labelWidth}
+                                inputProps={{
+                                    name: 'state',
+                                    id: 'outlined-age-simple',
+                                }}
+                                >
+                                <MenuItem value={"구매가능"}>구매가능</MenuItem>
+                                <MenuItem value={"거래중"}>거래중</MenuItem>
+                                <MenuItem value={"판매완료"}>판매완료</MenuItem>
                                 </Select>
                             </FormControl>
                             <DropzoneArea

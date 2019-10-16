@@ -228,6 +228,11 @@ function ProductInfo({ match }) {
                                     <TableCell><Typography variant="h6">태그: <Link to={"/hashtag/" + productInfo.hashtag}>{productInfo.hashtag}</Link></Typography></TableCell>
                                 </TableRow>
                             </TableBody>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell><Typography variant="h6">상품상태: {productInfo.state}</Typography></TableCell>
+                                </TableRow>
+                            </TableBody>
                         </Table>
                         <Button variant="contained" size="large" color="primary" className={classes.payBtn}>
                             구매하기
