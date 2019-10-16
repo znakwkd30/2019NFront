@@ -102,7 +102,7 @@ function Profile() {
     const [userImg, setUserImg] = React.useState();
     const [products, setProducts] = useState([]);
     const [value, setValue] = React.useState(0);
-    const [menu, setMenu] = React.useState(null);
+    const [menu, setMenu] = React.useState([]);
 
     const menuOpen = event => {
         setMenu(event.currentTarget);
@@ -156,7 +156,6 @@ function Profile() {
             url: "api/user/userinfo",
             headers: { "token": window.sessionStorage.getItem("token") || window.localStorage.getItem("token") },
         });
-
         setUserInfo(result.data.data);
         setUserImg(result.data.data.ProfileImages[0].src);
     }
@@ -186,6 +185,15 @@ function Profile() {
         });
         console.log(result);
         myProduct();
+    }
+
+    const addMenu = () => {
+        setMenu([
+            ...menu,
+            {
+                t: "",
+            }
+        ])
     }
 
     React.useEffect(() => {
