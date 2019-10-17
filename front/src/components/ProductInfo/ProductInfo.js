@@ -132,32 +132,37 @@ function ProductInfo({ match }) {
             method: "get",
             headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
         })
-        .then(result => {
-            setProductInfo(result.data.product);
-            setImagePath(result.data.product.Images);
-            setHash();
-        })
+            .then(result => {
+                setProductInfo(result.data.product);
+                setImagePath(result.data.product.Images);
+                setHash();
+            })
     }
 
     async function getComments() {
-        let result = await Axios({
-            url: "api/comment/list/" + match.params.id,
-            method: "get",
-            headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
-        })
-        console.log(result);
-        setComments(result.data);
+        try {
+            let result = await Axios({
+                url: "api/comment/list/" + match.params.id,
+                method: "get",
+                headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
+            })
+
+            console.log(result);
+            setComments(result.data);
+        } catch (err) {
+            setComments([]);
+        }
     }
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    async function submitComment(){
+    async function submitComment() {
         let result = await Axios({
             url: "api/comment/createComment/" + match.params.id,
             method: "post",
-            headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
+            headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
             data: {
                 content: newComment
             }
@@ -165,16 +170,16 @@ function ProductInfo({ match }) {
         getComments();
     }
 
-    async function remove(id){
-        try{
+    async function remove(id) {
+        try {
             let result = await Axios({
                 url: "api/comment/deleteComment/" + id,
                 method: "delete",
-                headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")}
+                headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
             })
             console.log(result);
             getComments();
-        }catch(err){
+        } catch (err) {
             alert("자신의 댓글만 삭제할 수 있습니다.");
         }
     }
@@ -276,10 +281,10 @@ function ProductInfo({ match }) {
                             전송
                         </Button>
                     </div>
-                    <hr/>
+                    <hr />
                     <div>
                         {comments.map(item => {
-                            return(
+                            return (
                                 <div className={classes.comment}>
                                     <div className={classes.user}>
                                         <span>{item.UserId}</span>
@@ -289,7 +294,7 @@ function ProductInfo({ match }) {
                                     </div>
                                     <div className={classes.remove}>
                                         <IconButton onClick={e => remove(item.id)} className={classes.removeBtn}>
-                                            <DeleteIcon/>
+                                            <DeleteIcon />
                                         </IconButton>
                                     </div>
                                 </div>
