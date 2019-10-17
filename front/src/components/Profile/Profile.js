@@ -5,7 +5,6 @@ import Time from 'react-time-format';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import MenuItem from '@material-ui/core/MenuItem';
 import Nav from '../Nav';
 import { Link } from 'react-router-dom';
 import defaultImg from '../../Assets/noImg.png';
@@ -13,12 +12,11 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import Box from '@material-ui/core/Box';
-import Menu from '@material-ui/core/Menu';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ProfileCard from './ProfileCard';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -33,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     itemCard: {
         margin: "20px",
         width: 350,
-        height: 420,
+        height: 380,
     },
     main: {
         margin: "60px auto 20px",
@@ -116,6 +114,10 @@ function Profile() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const heartClick = (id) => {
+        console.log(id);
+    }
 
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
@@ -255,22 +257,7 @@ function Profile() {
                 <TabPanel value={value} index={1}>
                     <div className={classes.root} style={{ width: "80%", margin: "auto" }}>
                         {heartProduct.map((item, key) => {
-                            return (
-                                <Card className={classes.itemCard} key={key}>
-                                    <CardHeader
-                                        title={<Link to={"/productinfo/" + item.id} className={classes.link}>{item.productName}</Link>}
-                                        subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
-                                    />
-                                    <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
-                                    {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
-                                    <CardContent>
-                                        <Typography variant="body2" color="textSecondary" component="p"
-                                            style={{ fontSize: "24px", fontFamily: "궁서체" }}>
-                                            {item.price}원
-                                    </Typography>
-                                    </CardContent>
-                                </Card>
-                            )
+                            return <ProfileCard item={ item } key={ key } />
                         })}
                     </div>
                 </TabPanel>

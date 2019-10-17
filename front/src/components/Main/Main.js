@@ -1,24 +1,16 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import {
-    Link
-} from 'react-router-dom';
-import Time from 'react-time-format';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Nav from '../Nav';
 import Axios from '../../Axios/Axios';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MainCard from './MainCard';
 
 import defaultImg from '../../Assets/noImg.png';
 
@@ -49,27 +41,6 @@ const useStyles = makeStyles(theme => ({
     link: {
         cursor: "pointer",
         textDecoration: "none",
-    },
-    card: {
-        width: "100%",
-        height: "100%",
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-    avatar: {
-        backgroundColor: red[500],
     },
 }));
 
@@ -106,43 +77,6 @@ function Main() {
         setHeartProducts(result.data.productList);
     }
 
-    async function handleHeartClick(id) {
-        try {
-            let result = await Axios({
-                url: "/api/heart/click/" + id,
-                headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
-                method: "post"
-            })
-            console.log(result);
-        } catch (err) {
-            console.log(err);
-        }
-        getMainProduct();
-    }
-
-    async function handleHeartUnclick(id) {
-        try {
-            let result = await Axios({
-                url: "api/heart/unclick/" + id,
-                headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
-                method: "post",
-            })
-            console.log(result);
-        } catch (err) {
-            console.log(err);
-        }
-        getMainProduct();
-    }
-
-    function checkHeartProduct(id) {
-        // heartProducts.map(item => {
-        //     if (item.Product.id === id) {
-        //         return true;
-        //     }
-        // })
-        // return false;
-    }
-
     useEffect(() => {
         getBanner();
         getMainProduct();
@@ -173,25 +107,7 @@ function Main() {
                 <Typography variant="h4" align="center">최근 등록된 상품</Typography>
                 <div className={classes.root}>
                     {products.map((item, key) => {
-                        return (
-                            <div className={classes.margin}>
-                                <Link to={"/productinfo/" + item.id} className={classes.link}>
-                                    <Card className={classes.card} key={key}>
-                                        <CardHeader
-                                            title={item.productName}
-                                            subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
-                                        />
-                                        <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
-                                        <CardContent>
-                                            <Typography variant="body2" color="textSecondary" component="p"
-                                                style={{ fontSize: "24px", fontFamily: "궁서체" }}>
-                                                {item.price}원
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Link>
-                            </div>
-                        )
+                        return <MainCard item={ item } key={ key }/>
                     })}
                 </div>
                 <hr />

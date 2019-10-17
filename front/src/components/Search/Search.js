@@ -13,7 +13,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import defaultImg from '../../Assets/noImg.png'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,7 +22,8 @@ const useStyles = makeStyles(theme => ({
     },
     card: {
         margin: "20px",
-        maxWidth: 400,
+        maxWidth: 300,
+        // height: 350,
     },
     media: {
         height: 0,
@@ -58,21 +58,27 @@ function Search({match}){
 
     const [products, setProducts] = useState([]);
     async function searchProduct() {
-        let result;
         if (match.params.name) {
-            result = await Axios({
+            Axios({
                 url: 'api/product/searchProduct/' + match.params.name,
                 headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
                 method: 'get'
             })
-        } else {
-            result = await Axios({
+            .then(result => {
+                console.log(result);
+                setProducts(result.data.productList);            
+            })
+        } else if (match.params.hashtag) {
+            Axios({
                 url: 'api/product/hashtagProduct/' + match.params.hashtag,
                 headers: {"token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token")},
                 method: 'get'
             })
+            .then(result => {
+                console.log(result.data);
+                setProducts(result.data.productList);            
+            })
         }
-        setProducts(result.data.productList);            
     }
 
     useEffect(() => {
@@ -92,12 +98,12 @@ function Search({match}){
                                 subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                             />
                             {/* <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
-                            {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
+                            <img src={"http://10.80.163.141:3065/" + item.src} style={{ width: 350, height: 200 }}></img>
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p"
                                     style={{ fontSize: "24px", fontFamily: "궁서체" }}>
                                     {item.price}원
-                                    </Typography>
+                                </Typography>
                             </CardContent>
                             <CardActions disableSpacing>
                                 <IconButton aria-label="add to favorites">

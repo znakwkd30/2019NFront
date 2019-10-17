@@ -155,7 +155,7 @@ const Nav = () => {
     };
 
     const handleReport = () => {
-        alert("준비중입니다.");
+        window.location.href = "/reportList";
     }
 
     const menuId = 'primary-search-account-menu';
