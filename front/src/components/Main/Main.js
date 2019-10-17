@@ -6,10 +6,6 @@ import Axios from '../../Axios/Axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MainCard from './MainCard';
 
 import defaultImg from '../../Assets/noImg.png';

@@ -5,7 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import { Link } from 'react-router-dom';
 import Nav from '../Nav';
 import Axios from '../../Axios/Axios';
-import { flexbox } from '@material-ui/system';
 
 const useStyles = makeStyles(theme => ({
     root: {

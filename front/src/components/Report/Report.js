@@ -56,7 +56,7 @@ function Report() {
         })
         .then(res => {
             console.log(res);
-            window.location.href = "/profile";
+            window.location.href = "/reportList";
         })
     }
 
