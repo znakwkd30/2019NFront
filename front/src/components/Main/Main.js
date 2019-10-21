@@ -1,16 +1,66 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Nav from '../Nav';
 import Axios from '../../Axios/Axios';
+import { Link } from 'react-router-dom';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import MainCard from './MainCard';
+import InputBase from '@material-ui/core/InputBase';
+
+import SearchIcon from '@material-ui/icons/Search';
 
 import defaultImg from '../../Assets/noImg.png';
 
 const useStyles = makeStyles(theme => ({
+    ns: {
+        width: "40%",
+        margin: "20px auto",
+        display: "flex",
+    },
+    nc: {
+        width: "21%",
+        margin: "10px auto",
+    },
+    cl: {
+        margin: "0 10px",
+    },
+    searche: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        border: "1px solid black",
+        width: '50%',
+        minWidth: 262,
+        margin: "0 auto",
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+          backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
+      },
+      searchIcon: {
+        width: theme.spacing(7),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      logo: {
+          lineHeight: "37px",
+            width: 100,
+            margin: "0 auto",
+            boxSizing: "border-box",
+      },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 7),
+    transition: theme.transitions.create('width'),
+    width: '100%',
+  },
     root: {
         display: "flex",
         justifyContent: "center",
@@ -38,10 +88,23 @@ const useStyles = makeStyles(theme => ({
         cursor: "pointer",
         textDecoration: "none",
     },
+    linkBtn: {
+        margin: "0 5px",
+        textDecoration: "none",
+        color: "black",
+        border: "none",
+        background: "inherit",
+        fontSize: 18,
+        cursor: "pointer",
+    },
+    nl: {
+        
+    }
 }));
 
 function Main() {
     const classes = useStyles();
+    const [log] = useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
     const [rendering, setRendering] = useState(false);
     const [check, setCheck] = useState(false);
     const [products, setProducts] = useState([]);
@@ -73,6 +136,12 @@ function Main() {
         setHeartProducts(result.data.productList);
     }
 
+    function logout(){
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        window.location.href = "/";
+    }
+
     useEffect(() => {
         getBanner();
         getMainProduct();
@@ -83,7 +152,44 @@ function Main() {
     return (
         rendering ?
             <Fragment>
-                <Nav />
+                <div className={classes.n}>
+                    <div className={classes.nm}>
+                        <div className={classes.mu}>
+
+                        </div>
+                    </div>
+                    <div className={classes.ns}>
+                        <div className={classes.logo}>
+                            <span><Link to="/" className={classes.linkBtn}>凝安該</Link></span>
+                        </div>
+                        <div className={classes.searche}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                                placeholder="Search…"
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </div>
+                        <div className={classes.nl}>
+                            {log ? <Link to="/login" className={classes.linkBtn}>로그인</Link> : <button className={classes.linkBtn} onClick={logout}>로그아웃</button>}
+                            {log ? <Link to="/register" className={classes.linkBtn}>회원가입</Link> : <Link to="/profile" className={classes.linkBtn}>프로필</Link>}
+                        </div>
+                    </div>
+                    <div className={classes.nc}>
+                        <Link className={classes.cl} to="/search/의류">의류</Link>
+                        <Link className={classes.cl} to="/search/전자기기">전자기기</Link>
+                        <Link className={classes.cl} to="/search/도서">도서</Link>
+                        <Link className={classes.cl} to="/search/굿즈">굿즈</Link>
+                        <Link className={classes.cl} to="/search/뷰티">뷰티</Link>
+                        <Link className={classes.cl} to="/search/나눔">나눔</Link>
+                        <Link className={classes.cl} to="/search/기타">기타</Link>
+                    </div>
+                </div>
                 <div className={classes.banner}>
                     <Carousel
                         className={classes.carousel}
@@ -103,7 +209,7 @@ function Main() {
                 <Typography variant="h4" align="center">최근 등록된 상품</Typography>
                 <div className={classes.root}>
                     {products.map((item, key) => {
-                        return <MainCard item={ item } key={ key }/>
+                        return <MainCard item={item} key={key} />
                     })}
                 </div>
                 <hr />
