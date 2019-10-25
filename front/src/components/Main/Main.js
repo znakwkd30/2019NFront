@@ -14,18 +14,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import defaultImg from '../../Assets/noImg.png';
 
 const useStyles = makeStyles(theme => ({
-    ns: {
-        width: "40%",
-        margin: "20px auto",
-        display: "flex",
-    },
-    nc: {
-        width: "21%",
-        margin: "10px auto",
-    },
-    cl: {
-        margin: "0 10px",
-    },
     searche: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -35,10 +23,10 @@ const useStyles = makeStyles(theme => ({
         margin: "0 auto",
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
-          backgroundColor: fade(theme.palette.common.white, 0.25),
+            backgroundColor: fade(theme.palette.common.white, 0.25),
         },
-      },
-      searchIcon: {
+    },
+    searchIcon: {
         width: theme.spacing(7),
         height: '100%',
         position: 'absolute',
@@ -46,21 +34,23 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-      },
-      logo: {
-          lineHeight: "37px",
-            width: 100,
-            margin: "0 auto",
-            boxSizing: "border-box",
-      },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-  },
+    },
+    logo: {
+        width: 180,
+        height: 150,
+        margin: "0 auto",
+        boxSizing: "border-box",
+        fontSize: 60,
+        lineHeight: "150px",
+    },
+    inputRoot: {
+        color: 'inherit',
+    },
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 7),
+        transition: theme.transitions.create('width'),
+        width: '100%',
+    },
     root: {
         display: "flex",
         justifyContent: "center",
@@ -97,8 +87,46 @@ const useStyles = makeStyles(theme => ({
         fontSize: 18,
         cursor: "pointer",
     },
+    n: {
+        width: "100%",
+    },
+    bt: {
+        borderTop: "1px solid #4c4c4c",
+    },
+    bb: {
+        borderBottom: "1px solid #e8e8e8",
+    },
+    nt: {
+        margin: "0 auto",
+        width: 1260,
+        height: 42,
+        lineHeight: "42px",
+    },
+    ntb: {
+        border: "none",
+        background: "inherit",
+        textDecoration: "none",
+        padding: "0 5px",
+        color: "#323232",
+        cursor: "pointer",
+        fontSize: "11px",
+        '&:hover': {
+            color: "#aaa",
+        }
+    },
     nl: {
-        
+        margin: "0 auto",
+        width: 1260,
+        height: 50,
+    },
+    lu: {
+        listStyle: "none",
+        display: "flex",
+    },
+    ul: {
+        textDecoration: "none",
+        color: "black",
+        padding: "0 68px",
     }
 }));
 
@@ -136,7 +164,7 @@ function Main() {
         setHeartProducts(result.data.productList);
     }
 
-    function logout(){
+    function logout() {
         window.localStorage.clear();
         window.sessionStorage.clear();
         window.location.href = "/";
@@ -153,41 +181,27 @@ function Main() {
         rendering ?
             <Fragment>
                 <div className={classes.n}>
-                    <div className={classes.nm}>
-                        <div className={classes.mu}>
-
+                    <div className={classes.bb}>
+                        <div className={classes.nt}>
+                            {log ? <Link to="/login" className={classes.ntb}>로그인</Link> : <button onClick={logout} className={classes.ntb}>로그아웃</button>}
+                            {log ? <Link to="/register" className={classes.ntb}>회원가입</Link> : <Link to ="/profile" className={classes.ntb}>프로필</Link>}
                         </div>
                     </div>
-                    <div className={classes.ns}>
-                        <div className={classes.logo}>
-                            <span><Link to="/" className={classes.linkBtn}>凝安該</Link></span>
-                        </div>
-                        <div className={classes.searche}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </div>
+                    <div className={classes.logo}>
+                        <span>凝安該</span>
+                    </div>
+                    <div className={classes.bt}>
                         <div className={classes.nl}>
-                            {log ? <Link to="/login" className={classes.linkBtn}>로그인</Link> : <button className={classes.linkBtn} onClick={logout}>로그아웃</button>}
-                            {log ? <Link to="/register" className={classes.linkBtn}>회원가입</Link> : <Link to="/profile" className={classes.linkBtn}>프로필</Link>}
+                            <ul className={classes.lu}>
+                                <li><Link to="/" className={classes.ul}>의류</Link></li>
+                                <li><Link to="/" className={classes.ul}>전자기기</Link></li>
+                                <li><Link to="/" className={classes.ul}>도서</Link></li>
+                                <li><Link to="/" className={classes.ul}>굿즈</Link></li>
+                                <li><Link to="/" className={classes.ul}>뷰티</Link></li>
+                                <li><Link to="/" className={classes.ul}>나눔</Link></li>
+                                <li><Link to="/" className={classes.ul}>기타</Link></li>
+                            </ul>
                         </div>
-                    </div>
-                    <div className={classes.nc}>
-                        <Link className={classes.cl} to="/search/의류">의류</Link>
-                        <Link className={classes.cl} to="/search/전자기기">전자기기</Link>
-                        <Link className={classes.cl} to="/search/도서">도서</Link>
-                        <Link className={classes.cl} to="/search/굿즈">굿즈</Link>
-                        <Link className={classes.cl} to="/search/뷰티">뷰티</Link>
-                        <Link className={classes.cl} to="/search/나눔">나눔</Link>
-                        <Link className={classes.cl} to="/search/기타">기타</Link>
                     </div>
                 </div>
                 <div className={classes.banner}>
