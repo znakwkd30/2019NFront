@@ -30,7 +30,7 @@ const Axios = require("../../Axios/Axios");
 const useStyles = makeStyles(theme => ({
     root: {
         width: "55%",
-        height: 400,
+        height: 510,
     },
     fCard: {
         margin: "10px auto",
@@ -247,6 +247,11 @@ function ProductInfo({ match }) {
                             <TableBody>
                                 <TableRow>
                                     <TableCell><Typography variant="h6">상품상태: {productInfo.state}</Typography></TableCell>
+                                </TableRow>
+                            </TableBody>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell><Typography variant="h6">판매자: <Link to={"/sellerProfile"}>{productInfo.UserId}</Link></Typography></TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
