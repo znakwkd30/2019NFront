@@ -7,9 +7,6 @@ import { Link } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import MainCard from './MainCard';
-import InputBase from '@material-ui/core/InputBase';
-
-import SearchIcon from '@material-ui/icons/Search';
 
 import defaultImg from '../../Assets/noImg.png';
 
@@ -134,9 +131,7 @@ function Main() {
     const classes = useStyles();
     const [log] = useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
     const [rendering, setRendering] = useState(false);
-    const [check, setCheck] = useState(false);
     const [products, setProducts] = useState([]);
-    const [heartProducts, setHeartProducts] = useState([]);
     const [imagesPath, setImagesPath] = useState([]);
 
     async function getBanner() {
@@ -155,15 +150,6 @@ function Main() {
         setProducts(result.data.productList);
     }
 
-    async function getHeartProduct() {
-        let result = await Axios({
-            url: "api/product/heartProductList",
-            headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
-            method: "get",
-        })
-        setHeartProducts(result.data.productList);
-    }
-
     function logout() {
         window.localStorage.clear();
         window.sessionStorage.clear();
@@ -173,7 +159,6 @@ function Main() {
     useEffect(() => {
         getBanner();
         getMainProduct();
-        getHeartProduct();
         setRendering(true);
     }, [setRendering]);
 

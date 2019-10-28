@@ -13,14 +13,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 import ForumIcon from '@material-ui/icons/Forum';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -227,43 +223,43 @@ const Nav = () => {
             <List>
                 <ListItem button>
                     <Link to="/search/의류" className={classes.drawerLink}>
-                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/tailoring-for-women.png" /></ListItemIcon>
+                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/tailoring-for-women.png" alt="file"/></ListItemIcon>
                         <ListItemText primary="의류" />
                     </Link>
                 </ListItem>
                 <ListItem button>
                     <Link to="/search/전자기기" className={classes.drawerLink}>
-                        <ListItemIcon><img src="https://img.icons8.com/pastel-glyph/30/000000/iphone-x--v1.png" /></ListItemIcon>
+                        <ListItemIcon><img src="https://img.icons8.com/pastel-glyph/30/000000/iphone-x--v1.png" alt="file"/></ListItemIcon>
                         <ListItemText primary="전자기기" />
                     </Link>
                 </ListItem>
                 <ListItem button>
                     <Link to="/search/도서" className={classes.drawerLink}>
-                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/book.png" /></ListItemIcon>
+                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/book.png" alt="file"/></ListItemIcon>
                         <ListItemText primary="도서" />
                     </Link>
                 </ListItem>
                 <ListItem button>
                     <Link to="/search/굿즈" className={classes.drawerLink}>
-                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/fantasy.png" /></ListItemIcon>
+                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/fantasy.png" alt="file"/></ListItemIcon>
                         <ListItemText primary="굿즈" />
                     </Link>
                 </ListItem>
                 <ListItem button>
                     <Link to="/search/뷰티" className={classes.drawerLink}>
-                        <ListItemIcon><img src="https://img.icons8.com/metro/30/000000/beeswax.png" /></ListItemIcon>
+                        <ListItemIcon><img src="https://img.icons8.com/metro/30/000000/beeswax.png" alt="file"/></ListItemIcon>
                         <ListItemText primary="뷰티" />
                     </Link>
                 </ListItem>
                 <ListItem button>
                     <Link to="/search/나눔" className={classes.drawerLink}>
-                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/gift.png" /></ListItemIcon>
+                        <ListItemIcon><img src="https://img.icons8.com/ios-filled/30/000000/gift.png" alt="file"/></ListItemIcon>
                         <ListItemText primary="나눔" />
                     </Link>
                 </ListItem>
                 <ListItem button>
                     <Link to="/search/기타" className={classes.drawerLink}>
-                        <ListItemIcon><img src="https://img.icons8.com/ios-glyphs/30/000000/more.png" /></ListItemIcon>
+                        <ListItemIcon><img src="https://img.icons8.com/ios-glyphs/30/000000/more.png" alt="file"/></ListItemIcon>
                         <ListItemText primary="기타" />
                     </Link>
                 </ListItem>

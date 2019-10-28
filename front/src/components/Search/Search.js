@@ -50,11 +50,6 @@ const useStyles = makeStyles(theme => ({
 
 function Search({match}){
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
     const [products, setProducts] = useState([]);
     async function searchProduct() {
@@ -98,7 +93,7 @@ function Search({match}){
                                 subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                             />
                             {/* <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
-                            <img src={"http://10.80.163.141:3065/" + item.src} style={{ width: 350, height: 200 }}></img>
+                            <img alt="file" src={"http://10.80.163.141:3065/" + item.src} style={{ width: 350, height: 200 }}></img>
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p"
                                     style={{ fontSize: "24px", fontFamily: "궁서체" }}>

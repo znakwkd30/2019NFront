@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Time from 'react-time-format';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import axios from '../../../Axios/Axios';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -60,18 +58,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProfileCard = ({ item }) => {
-    const handleHeart = id => {
-        console.log(id);
-        axios({
-            url: "api/heart/unclick/" + id,
-            headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
-            method: "post"
-        })
-        .then(result => {
-            console.log(result);
-        })
-    }
-
     const classes = useStyles();
     return (
         <Card className={classes.itemCard}>
@@ -80,7 +66,7 @@ const ProfileCard = ({ item }) => {
                 subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
             />
             {/* <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img> */}
-            <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img>
+            <img alt="file" src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img>
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p"
                     style={{ fontSize: "24px", fontFamily: "궁서체" }}>

@@ -120,7 +120,7 @@ function ProductChange({ match }) {
     const [values, setValues] = React.useState({
         category: '',
     });
-    const [labelWidth, setLabelWidth] = React.useState(0);
+    const [labelWidth] = React.useState(0);
     const classes = useStyles();
     const [productInfo, setProductInfo] = useState([]);
     const [imagePath, setImagePath] = useState([]);
@@ -134,10 +134,6 @@ function ProductChange({ match }) {
         setProductInfo(result.data.product);
         setImagePath(result.data.product.Images);
         setInput(result.data.product);
-    }
-
-    function handleStateChange() {
-
     }
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 import Nav from '../Nav';
-import { DropzoneArea, DropzoneDialog } from 'material-ui-dropzone';
+import { DropzoneArea } from 'material-ui-dropzone';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';

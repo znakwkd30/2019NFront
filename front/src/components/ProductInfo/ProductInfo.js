@@ -141,7 +141,6 @@ function ProductInfo({ match }) {
             .then(result => {
                 setProductInfo(result.data.product);
                 setImagePath(result.data.product.Images);
-                setHash();
             })
     }
 
@@ -163,7 +162,7 @@ function ProductInfo({ match }) {
     };
 
     async function submitComment() {
-        let result = await Axios({
+        await Axios({
             url: "api/comment/createComment/" + match.params.id,
             method: "post",
             headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
@@ -185,9 +184,10 @@ function ProductInfo({ match }) {
         result.data.map(item => {
             if(item.id === productInfo.id){
                 setIsHeartProduct(true);
-                return;
+                return true;
             }
             setIsHeartProduct(false);
+            return false;
         })
     }
 
@@ -203,14 +203,6 @@ function ProductInfo({ match }) {
         } catch (err) {
             alert("자신의 댓글만 삭제할 수 있습니다.");
         }
-    }
-
-    const [hashtag, setHashtag] = useState();
-    const setHash = () => {
-        console.log(productInfo);
-        let hash = (String)(productInfo.hashtag).split("#");
-        console.log(hash);
-        setHashtag(hash);
     }
 
     const unFav = async () => {
