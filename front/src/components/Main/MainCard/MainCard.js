@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     margin: {
         margin: "20px",
         width: 350,
-        height: 420,
+        height: 365,
     },
     link: {
         cursor: "pointer",
@@ -68,11 +68,6 @@ const MainCard = ({ item }) => {
                         {item.price}원
                     </Typography>
                 </CardContent>
-                <CardActions onClick={() => { handleClick(item.id) }}>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                    </IconButton>
-                </CardActions>
             </Card>
         </div>
     )

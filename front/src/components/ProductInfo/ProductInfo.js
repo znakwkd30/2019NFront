@@ -19,6 +19,8 @@ import Box from '@material-ui/core/Box';
 import Input from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
 
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import Nav from '../Nav';
@@ -90,6 +92,9 @@ const useStyles = makeStyles(theme => ({
     },
     removeBtn: {
         padding: 0,
+    },
+    favbtn: {
+        margin: "20px",
     }
 }))
 
@@ -122,6 +127,7 @@ function ProductInfo({ match }) {
     const [productInfo, setProductInfo] = useState({});
     const [imagePath, setImagePath] = useState([]);
     const [value, setValue] = useState(0);
+    const [isHeartProduct, setIsHeartProduct] = useState(false);
 
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState([]);
@@ -146,8 +152,6 @@ function ProductInfo({ match }) {
                 method: "get",
                 headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") }
             })
-
-            console.log(result);
             setComments(result.data);
         } catch (err) {
             setComments([]);
@@ -168,6 +172,23 @@ function ProductInfo({ match }) {
             }
         })
         getComments();
+    }
+
+    async function getHeartProduct(){
+        let result = await Axios({
+            url: "api/product/heartProductList",
+            method: "get",
+            headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
+        });
+        console.log(result);
+        console.log(productInfo);
+        result.data.map(item => {
+            if(item.id === productInfo.id){
+                setIsHeartProduct(true);
+                return;
+            }
+            setIsHeartProduct(false);
+        })
     }
 
     async function remove(id) {
@@ -192,10 +213,34 @@ function ProductInfo({ match }) {
         setHashtag(hash);
     }
 
+    const unFav = async () => {
+        let result = await Axios({
+            url: "api/heart/unclick/" + productInfo.id,
+            method: "post",
+            headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
+        })
+        console.log(result);
+        getHeartProduct();
+    }
+
+    const fav = async () => {
+        let result = await Axios({
+            url: "api/heart/click/" + productInfo.id,
+            method: "post",
+            headers: { "token": window.localStorage.getItem("token") || window.sessionStorage.getItem("token") },
+        })
+        console.log(result);
+        getHeartProduct();
+    }
+
     useEffect(() => {
         getProductInfo();
         getComments();
     }, [])
+
+    useEffect(() => {
+        getHeartProduct();
+    }, [productInfo])
 
     return (
         <Fragment>
@@ -252,12 +297,21 @@ function ProductInfo({ match }) {
                             <TableBody>
                                 <TableRow>
                                     <TableCell><Typography variant="h6">판매자: <Link to={"/sellerProfile"}>{productInfo.UserId}</Link></Typography></TableCell>
+                                    {isHeartProduct ? 
+                                        <IconButton onClick={unFav} className={classes.favbtn}>
+                                            <FavoriteIcon/>
+                                        </IconButton>
+                                        :
+                                        <IconButton onClick={fav} className={classes.favbtn}>
+                                            <FavoriteBorderIcon/>
+                                        </IconButton>
+                                    }
+                                    <Button variant="contained" size="large" color="primary" className={classes.payBtn}>
+                                        구매하기
+                                    </Button>
                                 </TableRow>
                             </TableBody>
                         </Table>
-                        <Button variant="contained" size="large" color="primary" className={classes.payBtn}>
-                            구매하기
-                        </Button>
                     </Paper>
                 </div>
             </Card>
