@@ -14,6 +14,7 @@ import ProductChange from './ProductChange/ProductChange';
 import profileChange from './ProfileChange/ProfileChange';
 import Report from './Report/Report';
 import ReportList from './ReportList/ReportList';
+import Seller from './Seller/Seller';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/register" component={Account}/>
       <Route path="/login" component={Login}/>
       <Route path="/chat" component={Chat}/>
+      <Route path="/sellerProfile/:id" component={Seller}/>
       <Route path="/profile" component={Profile}/>
       <Switch>
         <Route path="/search/:name" component={Search}/>
