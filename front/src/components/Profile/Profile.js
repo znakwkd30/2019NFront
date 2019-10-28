@@ -17,6 +17,7 @@ import Tab from '@material-ui/core/Tab';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ProfileCard from './ProfileCard';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -65,6 +66,11 @@ const useStyles = makeStyles(theme => ({
     },
     profileIcon: {
         alignItems: "right"
+    },
+    button: {
+        margin: "20px 40px",
+        width: 125,
+        padding: "6px 16px",
     }
 }));
 
@@ -190,6 +196,10 @@ function Profile() {
         myProduct();
     }
 
+    const productAdd = () => {
+        window.location.href = "/product";
+    }
+
     React.useEffect(() => {
         getProfile();
         myProduct();
@@ -209,6 +219,9 @@ function Profile() {
                         <Typography variant="h3" align="center" className={classes.Typography}>
                             {userInfo.name}
                         </Typography>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={productAdd}>
+                            상품 등록하기
+                        </Button>
                     </div>
                 </Card>
                 <Tabs
