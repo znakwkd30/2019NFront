@@ -38,6 +38,13 @@ const useStyles = makeStyles(theme => ({
             display: 'block',
         },
     },
+    titleTxt: {
+        fontFamily: 'Arial',
+        fontSize: "20px",
+        color: "white",
+        fontWeight: "bold",
+        textDecoration: "none",
+    },
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -288,7 +295,7 @@ const Nav = () => {
                         {sideList('left')}
                     </SwipeableDrawer>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        <Link to="/">凝安該</Link>
+                        <Link to="/" className={classes.titleTxt}>凝安該</Link>
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
