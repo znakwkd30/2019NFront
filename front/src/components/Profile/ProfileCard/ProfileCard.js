@@ -87,7 +87,6 @@ const ProfileCard = ({ item }) => {
                     {item.price}원
                 </Typography>
             </CardContent>
-            <Button onClick={() => { handleHeart(item.id) }}><img src="https://img.icons8.com/cotton/64/000000/like--v1.png"/></Button>
         </Card>
     );
 };
