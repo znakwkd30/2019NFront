@@ -288,7 +288,7 @@ function ProductInfo({ match }) {
                             </TableBody>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell><Typography variant="h6">판매자: <Link to={"/sellerProfile"}>{productInfo.UserId}</Link></Typography></TableCell>
+                                    <TableCell><Typography variant="h6">판매자: <Link to={"/sellerProfile/" + productInfo.UserId}>{productInfo.UserId}</Link></Typography></TableCell>
                                     {isHeartProduct ? 
                                         <IconButton onClick={unFav} className={classes.favbtn}>
                                             <FavoriteIcon/>
