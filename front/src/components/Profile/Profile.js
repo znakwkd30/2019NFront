@@ -98,7 +98,7 @@ function a11yProps(index) {
     };
 }
 
-function Profile() {
+function Profile({match}) {
     const classes = useStyles();
 
     const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
@@ -162,7 +162,7 @@ function Profile() {
 
     async function getProfile() {
         let result = await Axios({
-            url: "api/user/userinfo",
+            url: "api/user/userInfo",
             headers: { "token": window.sessionStorage.getItem("token") || window.localStorage.getItem("token") },
         });
         setUserInfo(result.data.data);

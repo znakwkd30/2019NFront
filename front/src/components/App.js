@@ -22,7 +22,7 @@ function App() {
       <Route path="/register" component={Account}/>
       <Route path="/login" component={Login}/>
       <Route path="/chat" component={Chat}/>
-      <Route path="/profile" component={Profile}/>
+      <Route path="/profile/:id" component={Profile}/>
       <Switch>
         <Route path="/search/:name" component={Search}/>
         <Route path="/hashtag/:hashtag" component={Search}/>

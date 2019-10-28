@@ -130,7 +130,7 @@ const Nav = () => {
         if (log) {
             alert("로그인이 필요한 서비스입니다.");
         } else {
-            window.location.href = "/profile";
+            window.location.href = "/profile/" + window.sessionStorage.getItem("id");
         }
     }
 
