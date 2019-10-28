@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import Axios from '../../Axios/Axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Time from 'react-time-format';
@@ -107,23 +107,10 @@ function Profile({match}) {
     const [userImg, setUserImg] = React.useState();
     const [products, setProducts] = useState([]);
     const [value, setValue] = React.useState(0);
-    const [menu, setMenu] = React.useState([]);
-
-    const menuOpen = event => {
-        setMenu(event.currentTarget);
-    };
-
-    const menuClose = () => {
-        setMenu(null);
-    };
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    const heartClick = (id) => {
-        console.log(id);
-    }
 
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
