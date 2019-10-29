@@ -213,6 +213,7 @@ function ProductInfo({ match }) {
         })
         console.log(result);
         getHeartProduct();
+        getProductInfo();
     }
 
     const fav = async () => {
@@ -223,6 +224,7 @@ function ProductInfo({ match }) {
         })
         console.log(result);
         getHeartProduct();
+        getProductInfo();
     }
 
     useEffect(() => {
@@ -301,7 +303,7 @@ function ProductInfo({ match }) {
                                         <IconButton onClick={fav} className={classes.favbtn}>
                                             <FavoriteBorderIcon/>
                                         </IconButton>
-                                    }
+                                    }{productInfo.heart}개
                                     <Button variant="contained" size="large" color="primary" className={classes.payBtn}>
                                         구매하기
                                     </Button>

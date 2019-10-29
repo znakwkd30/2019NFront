@@ -106,7 +106,7 @@ const useStyles = makeStyles(theme => ({
         padding: "0 5px",
         color: "#323232",
         cursor: "pointer",
-        fontSize: "11px",
+        fontSize: "16px",
         '&:hover': {
             color: "#aaa",
         }
@@ -185,13 +185,13 @@ function Main() {
                     <div className={classes.bt}>
                         <div className={classes.nl}>
                             <ul className={classes.lu}>
-                                <li><Link to="/" className={classes.ul}>의류</Link></li>
-                                <li><Link to="/" className={classes.ul}>전자기기</Link></li>
-                                <li><Link to="/" className={classes.ul}>도서</Link></li>
-                                <li><Link to="/" className={classes.ul}>굿즈</Link></li>
-                                <li><Link to="/" className={classes.ul}>뷰티</Link></li>
-                                <li><Link to="/" className={classes.ul}>학용품</Link></li>
-                                <li><Link to="/" className={classes.ul}>기타</Link></li>
+                                <li><Link to="/search/의류" className={classes.ul}>의류</Link></li>
+                                <li><Link to="/search/전자기기" className={classes.ul}>전자기기</Link></li>
+                                <li><Link to="/search/도서" className={classes.ul}>도서</Link></li>
+                                <li><Link to="/search/굿즈" className={classes.ul}>굿즈</Link></li>
+                                <li><Link to="/search/뷰티" className={classes.ul}>뷰티</Link></li>
+                                <li><Link to="/search/학용품" className={classes.ul}>학용품</Link></li>
+                                <li><Link to="/search/기타" className={classes.ul}>기타</Link></li>
                             </ul>
                         </div>
                     </div>

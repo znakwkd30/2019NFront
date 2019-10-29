@@ -100,11 +100,6 @@ function Search({match}){
                                     {item.price}원
                                 </Typography>
                             </CardContent>
-                            <CardActions disableSpacing>
-                                <IconButton aria-label="add to favorites">
-                                    <FavoriteIcon />
-                                </IconButton>
-                            </CardActions>
                         </Card>
                         </Link>
                     )

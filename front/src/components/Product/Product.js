@@ -178,7 +178,7 @@ function Product() {
                     <MenuItem value={"의류"}>의류</MenuItem>
                     <MenuItem value={"전자기기"}>전자기기</MenuItem>
                     <MenuItem value={"도서"}>도서</MenuItem>
-                    <MenuItem value={"스타굿즈"}>굿즈</MenuItem>
+                    <MenuItem value={"굿즈"}>굿즈</MenuItem>
                     <MenuItem value={"뷰티"}>뷰티</MenuItem>
                     <MenuItem value={"학용품"}>학용품</MenuItem>
                     <MenuItem value={"기타"}>기타</MenuItem>

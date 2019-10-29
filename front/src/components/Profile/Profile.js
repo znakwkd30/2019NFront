@@ -187,6 +187,10 @@ function Profile() {
         window.location.href = "/product";
     }
 
+    const profileEdit = () => {
+        window.location.href = "/profilechange";        
+    }
+
     React.useEffect(() => {
         getProfile();
         myProduct();
@@ -206,9 +210,14 @@ function Profile() {
                         <Typography variant="h3" align="center" className={classes.Typography}>
                             {userInfo.name}
                         </Typography>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={productAdd}>
-                            상품 등록하기
-                        </Button>
+                        <div>
+                            <Button variant="contained" color="primary" className={classes.button} onClick={productAdd}>
+                                상품 등록하기
+                            </Button>
+                            {/* <Button variant="contained" color="primary" className={classes.button} onClick={profileEdit}>
+                                프로필 수정하기
+                            </Button> */}
+                        </div>
                     </div>
                 </Card>
                 <Tabs
@@ -245,7 +254,7 @@ function Profile() {
                                     {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
                                     <CardContent>
                                         <Typography variant="body2" color="textSecondary" component="p"
-                                            style={{ fontSize: "24px", fontFamily: "궁서체" }}>
+                                            style={{ fontSize: "24px" }}>
                                             {item.price}원
                                     </Typography>
                                     </CardContent>
