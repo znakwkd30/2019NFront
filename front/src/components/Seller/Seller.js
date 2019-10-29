@@ -97,6 +97,7 @@ function Seller(match) {
     const classes = useStyles();
 
     const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
+    const [id] = React.useState(match.match.params.id === window.sessionStorage.getItem("id") || window.localStorage.getItem("id"));
     const [userInfo, setUserInfo] = React.useState([]);
     const [userImg, setUserImg] = React.useState();
     const [products, setProducts] = useState([]);
@@ -159,6 +160,8 @@ function Seller(match) {
     if (log) {
         alert("로그인이 필요한 서비스입니다.");
         window.location.href = "/login";
+    } else if(id){
+        window.location.href = "/profile";
     } else {
         return (
             <Fragment>

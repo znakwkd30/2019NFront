@@ -17,6 +17,7 @@ import Tab from '@material-ui/core/Tab';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ProfileCard from './ProfileCard';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
@@ -68,9 +69,8 @@ const useStyles = makeStyles(theme => ({
         alignItems: "right"
     },
     button: {
-        margin: "20px 40px",
-        width: 125,
-        padding: "6px 16px",
+        margin: "20px 27px",
+        width: 145,
     }
 }));
 
@@ -98,7 +98,7 @@ function a11yProps(index) {
     };
 }
 
-function Profile() {
+function Profile({ match }) {
     const classes = useStyles();
 
     const [log] = React.useState(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null);
@@ -149,7 +149,7 @@ function Profile() {
 
     async function getProfile() {
         let result = await Axios({
-            url: "api/user/userinfo",
+            url: "api/user/userInfo",
             headers: { "token": window.sessionStorage.getItem("token") || window.localStorage.getItem("token") },
         });
         setUserInfo(result.data.data);
@@ -188,7 +188,7 @@ function Profile() {
     }
 
     const profileEdit = () => {
-        window.location.href = "/profilechange";        
+        window.location.href = "/profileChange"
     }
 
     React.useEffect(() => {
@@ -210,14 +210,15 @@ function Profile() {
                         <Typography variant="h3" align="center" className={classes.Typography}>
                             {userInfo.name}
                         </Typography>
-                        <div>
-                            <Button variant="contained" color="primary" className={classes.button} onClick={productAdd}>
-                                상품 등록하기
-                            </Button>
-                            {/* <Button variant="contained" color="primary" className={classes.button} onClick={profileEdit}>
-                                프로필 수정하기
-                            </Button> */}
-                        </div>
+                        <ButtonGroup
+                            variant="text"
+                            color="primary"
+                            aria-label="full-width contained primary button group"
+                            className={classes.button}
+                        >
+                            <Button onClick={profileEdit}>프로필 수정</Button>
+                            <Button onClick={productAdd}>상품 등록</Button>
+                        </ButtonGroup>
                     </div>
                 </Card>
                 <Tabs
@@ -243,7 +244,7 @@ function Profile() {
                                                     <EditIcon />
                                                 </IconButton>
                                                 <IconButton aria-label="remove" onClick={e => handleDelete(item.id)}>
-                                                    <DeleteIcon/>
+                                                    <DeleteIcon />
                                                 </IconButton>
                                             </div>
                                         }
@@ -266,7 +267,7 @@ function Profile() {
                 <TabPanel value={value} index={1}>
                     <div className={classes.root} style={{ width: "80%", margin: "auto" }}>
                         {heartProduct.map((item, key) => {
-                            return <ProfileCard item={ item } key={ key } />
+                            return <ProfileCard item={item} key={key} />
                         })}
                     </div>
                 </TabPanel>

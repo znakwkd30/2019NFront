@@ -3,5 +3,5 @@ const dbUri = require('../config/dbUri');
 
 module.exports = axios.create({
     baseURL: dbUri.baseUri,
-    timeout: 2000,
+    timeout: 1000,
 })
