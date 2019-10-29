@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import MainCard from './MainCard';
 
 import defaultImg from '../../Assets/noImg.png';
+import logoImg from '../../Assets/logo.png';
 
 const useStyles = makeStyles(theme => ({
     searche: {
@@ -33,12 +34,9 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
     },
     logo: {
-        width: 180,
+        width: "60%",
         height: 150,
-        margin: "0 auto",
-        boxSizing: "border-box",
-        fontSize: 60,
-        lineHeight: "150px",
+        margin: "0, auto",
     },
     inputRoot: {
         color: 'inherit',
@@ -58,13 +56,14 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center"
     },
     carousel: {
+        marginTop: 15,
         marginBottom: 40,
-        width: "80%",
-        height: 600,
+        width: "70%",
+        height: 450,
     },
     bannerImg: {
-        width: "100%",
-        height: 600,
+        width: "80%",
+        height: 400,
     },
     margin: {
         margin: "20px",
@@ -115,6 +114,7 @@ const useStyles = makeStyles(theme => ({
         margin: "0 auto",
         width: 1260,
         height: 50,
+        fontSize: 18
     },
     lu: {
         listStyle: "none",
@@ -172,8 +172,8 @@ function Main() {
                             {log ? <Link to="/register" className={classes.ntb}>회원가입</Link> : <Link to ="/profile" className={classes.ntb}>프로필</Link>}
                         </div>
                     </div>
-                    <div className={classes.logo}>
-                        <span>凝安該</span>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <img className={classes.logo} src={logoImg} />
                     </div>
                     <div className={classes.bt}>
                         <div className={classes.nl}>
@@ -183,7 +183,7 @@ function Main() {
                                 <li><Link to="/" className={classes.ul}>도서</Link></li>
                                 <li><Link to="/" className={classes.ul}>굿즈</Link></li>
                                 <li><Link to="/" className={classes.ul}>뷰티</Link></li>
-                                <li><Link to="/" className={classes.ul}>나눔</Link></li>
+                                <li><Link to="/" className={classes.ul}>학용품</Link></li>
                                 <li><Link to="/" className={classes.ul}>기타</Link></li>
                             </ul>
                         </div>
@@ -213,7 +213,7 @@ function Main() {
                 </div>
                 <hr />
                 <div style={{ display: "block" }}>
-                    <div style={{ margin: "auto", width: "1000px", fontFamily: "나눔손글씨 김유이체", fontSize: "20px", fontWeight: "bold" }}>
+                    <div style={{ margin: "auto", width: "1000px", fontFamily: "나눔손글씨 김유이체", fontSize: "16px", fontWeight: "bold" }}>
                         <p>WDNA 대표이사 OOO  개인정보보호담당자 OOO  사업자등록정보 X  통신판매업신고 X</p>
                         <p>대구광역시 달성군 구지면 창리로11길 93 / TEL X</p>
                         <p>너울시장은 통신판매중개자로서 중고거래마켓 너울시장의 거래 당사자가 아니며, 입점판매가 등록한 상품정보 및 거래에 대해 책임을 지지 않습니다</p>
