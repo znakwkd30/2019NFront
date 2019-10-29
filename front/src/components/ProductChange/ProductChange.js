@@ -133,7 +133,9 @@ function ProductChange({ match }) {
         });
         setProductInfo(result.data.product);
         setImagePath(result.data.product.Images);
+        setImages(result.data.product.Images);
         setInput(result.data.product);
+        console.log(images);
     }
 
     useEffect(() => {

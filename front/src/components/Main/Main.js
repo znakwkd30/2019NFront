@@ -11,12 +11,14 @@ import InputBase from '@material-ui/core/InputBase';
 
 import SearchIcon from '@material-ui/icons/Search';
 import defaultImg from '../../Assets/noImg.png';
+import logoImg from '../../Assets/logo.png';
+import snaillogo from '../../Assets/snaillogo.jpg'
 
 import './Main.css';
 
 const useStyles = makeStyles(theme => ({
     logo: {
-        width: 180,
+        width: "60%",
         height: 150,
         margin: "0 auto",
         boxSizing: "border-box",
@@ -38,13 +40,14 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center"
     },
     carousel: {
+        marginTop: 15,
         marginBottom: 40,
-        width: "80%",
-        height: 600,
+        width: "70%",
+        height: 450,
     },
     bannerImg: {
-        width: "100%",
-        height: 600,
+        width: "80%",
+        height: 400,
     },
     margin: {
         margin: "20px",
@@ -102,6 +105,7 @@ const useStyles = makeStyles(theme => ({
         margin: "0 auto",
         width: 1260,
         height: 50,
+        fontSize: 18
     },
     lu: {
         listStyle: "none",
@@ -221,19 +225,20 @@ function Main() {
                             </div>
                         </div>
                     </div>
-                    <div className={classes.logo}>
-                        <span className={classes.logoTxt}>凝安該</span>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <img className={classes.logo} src={logoImg} />
+                        <img className={classes.snaillogo} src={snaillogo} />
                     </div>
                     <div className={classes.bt}>
                         <div className={classes.nl}>
                             <ul className={classes.lu}>
-                                <li><Link to="/search/의류" className={classes.ul}>의류</Link></li>
-                                <li><Link to="/search/전자기기" className={classes.ul}>전자기기</Link></li>
-                                <li><Link to="/search/도서" className={classes.ul}>도서</Link></li>
-                                <li><Link to="/search/굿즈" className={classes.ul}>굿즈</Link></li>
-                                <li><Link to="/search/뷰티" className={classes.ul}>뷰티</Link></li>
-                                <li><Link to="/search/나눔" className={classes.ul}>나눔</Link></li>
-                                <li><Link to="/search/기타" className={classes.ul}>기타</Link></li>
+                                <li><Link to="/" className={classes.ul}>의류</Link></li>
+                                <li><Link to="/" className={classes.ul}>전자기기</Link></li>
+                                <li><Link to="/" className={classes.ul}>도서</Link></li>
+                                <li><Link to="/" className={classes.ul}>굿즈</Link></li>
+                                <li><Link to="/" className={classes.ul}>뷰티</Link></li>
+                                <li><Link to="/" className={classes.ul}>학용품</Link></li>
+                                <li><Link to="/" className={classes.ul}>기타</Link></li>
                             </ul>
                         </div>
                     </div>

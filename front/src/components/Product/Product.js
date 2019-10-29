@@ -180,7 +180,7 @@ function Product() {
                     <MenuItem value={"도서"}>도서</MenuItem>
                     <MenuItem value={"스타굿즈"}>굿즈</MenuItem>
                     <MenuItem value={"뷰티"}>뷰티</MenuItem>
-                    <MenuItem value={"나눔"}>나눔</MenuItem>
+                    <MenuItem value={"학용품"}>학용품</MenuItem>
                     <MenuItem value={"기타"}>기타</MenuItem>
                     </Select>
                 </FormControl>

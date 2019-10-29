@@ -82,7 +82,7 @@ function Login() {
     }
   }
 
-  if(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null){
+  if(window.localStorage.getItem("token") === null && window.sessionStorage.getItem("token") === null) {
     return (
       <Fragment>
         <Nav/>
