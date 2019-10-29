@@ -129,6 +129,7 @@ function ProductInfo({ match }) {
     const [value, setValue] = useState(0);
     const [isHeartProduct, setIsHeartProduct] = useState(false);
 
+    const [log] = useState(window.sessionStorage.getItem("token") !== null || window.localStorage.getItem("token") !== null)
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState([]);
 
@@ -141,6 +142,10 @@ function ProductInfo({ match }) {
             .then(result => {
                 setProductInfo(result.data.product);
                 setImagePath(result.data.product.Images);
+            })
+            .catch(() => {
+                window.location.href = "/";
+                alert("로그인이 필요합니다");
             })
     }
 
@@ -173,7 +178,7 @@ function ProductInfo({ match }) {
         getComments();
     }
 
-    async function getHeartProduct(){
+    async function getHeartProduct() {
         let result = await Axios({
             url: "api/product/heartProductList",
             method: "get",
@@ -182,7 +187,7 @@ function ProductInfo({ match }) {
         console.log(result);
         console.log(productInfo);
         result.data.map(item => {
-            if(item.id === productInfo.id){
+            if (item.id === productInfo.id) {
                 setIsHeartProduct(true);
                 return true;
             }
@@ -233,7 +238,6 @@ function ProductInfo({ match }) {
     useEffect(() => {
         getHeartProduct();
     }, [productInfo])
-
     return (
         <Fragment>
             <Nav />
@@ -293,18 +297,18 @@ function ProductInfo({ match }) {
                             </TableBody>
                             <TableBody>
                                 <TableRow>
-                                    {isHeartProduct ? 
+                                    {isHeartProduct ?
                                         <IconButton onClick={unFav} className={classes.favbtn}>
-                                            <FavoriteIcon/>
+                                            <FavoriteIcon />
                                         </IconButton>
                                         :
                                         <IconButton onClick={fav} className={classes.favbtn}>
-                                            <FavoriteBorderIcon/>
+                                            <FavoriteBorderIcon />
                                         </IconButton>
                                     }
                                     <Button variant="contained" size="large" color="primary" className={classes.payBtn}>
                                         구매하기
-                                    </Button>
+                                                </Button>
                                 </TableRow>
                             </TableBody>
                         </Table>
@@ -334,7 +338,7 @@ function ProductInfo({ match }) {
                         />
                         <Button variant="contained" color="primary" onClick={submitComment} className={classes.button}>
                             전송
-                        </Button>
+                                    </Button>
                     </div>
                     <hr />
                     <div>
@@ -360,6 +364,7 @@ function ProductInfo({ match }) {
             </Paper>
         </Fragment>
     )
+
 }
 
 export default ProductInfo;
