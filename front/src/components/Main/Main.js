@@ -10,6 +10,7 @@ import MainCard from './MainCard';
 
 import defaultImg from '../../Assets/noImg.png';
 import logoImg from '../../Assets/logo.png';
+import snaillogo from '../../Assets/snaillogo.jpg'
 
 const useStyles = makeStyles(theme => ({
     searche: {
@@ -124,6 +125,11 @@ const useStyles = makeStyles(theme => ({
         textDecoration: "none",
         color: "black",
         padding: "0 68px",
+    },
+    snaillogo: {
+        width: "10%",
+        height: 150,
+        margin: "0, auto",
     }
 }));
 
@@ -174,6 +180,7 @@ function Main() {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <img className={classes.logo} src={logoImg} />
+                        <img className={classes.snaillogo} src={snaillogo} />
                     </div>
                     <div className={classes.bt}>
                         <div className={classes.nl}>
