@@ -89,7 +89,7 @@ function Product() {
 
     async function handleSumbit(e) {
         e.preventDefault();
-        await axios.post("http://localhost:3065/api/product/", form, {
+        await axios.post("http://192.168.0.4:3065/api/product/", form, {
             headers: { 
                 "token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token") 
             },
