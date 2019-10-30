@@ -119,6 +119,7 @@ function Login() {
                   label="Password"
                   type="password"
                   id="password"
+                  style={{"fontFamily" : "Arial!import"}}
                   autoComplete="current-password"
                   onBlur={event => {setInput({...input, pw: event.target.value})}}
               />
