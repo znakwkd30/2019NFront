@@ -8,11 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -86,7 +83,7 @@ function Search({match}){
             <div className={classes.root} style={{ width: "80%", margin: "auto" }}> 
                 {products.map((item, key) => {
                     return (
-                        <Link to={"/productinfo/" + item.id} className={classes.link}>
+                        <Link to={ `/productinfo/${ --item.id }` } className={classes.link}>
                         <Card className={classes.card} key={key}>
                             <CardHeader
                                 title={item.productName}
