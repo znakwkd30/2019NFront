@@ -129,7 +129,7 @@ function ProfileChange({ match }) {
                         infiniteLoop={true}
                     >
                     <div>
-                        <img alt="profileImg" src={userInfo.ProfileImages === null ? "../Profile/noneImg.png" : "http://10.80.163.141:3065/\\" + userImg} className={classes.avatar} />
+                        <img alt="profileImg" src={userInfo.ProfileImages === null ? "../Profile/noneImg.png" : "http://192.168.0.4:3065/\\" + userImg} className={classes.avatar} />
                     </div>
                     </Carousel>
                     <Paper className={classes.root}>

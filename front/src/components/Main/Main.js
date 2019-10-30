@@ -251,10 +251,10 @@ function Main() {
                         infiniteLoop={true}
                     >
                         <div>
-                            <img className={classes.bannerImg} src={imagesPath[0] === undefined ? defaultImg : "http://10.80.163.141:3065/" + imagesPath[0]} alt="banner" />
+                            <img className={classes.bannerImg} src={imagesPath[0] === undefined ? defaultImg : "http://192.168.0.4:3065/" + imagesPath[0]} alt="banner" />
                         </div>
                         <div>
-                            <img className={classes.bannerImg} src={imagesPath[1] === undefined ? defaultImg : "http://10.80.163.141:3065/" + imagesPath[1]} alt="banner" />
+                            <img className={classes.bannerImg} src={imagesPath[1] === undefined ? defaultImg : "http://192.168.0.4:3065/" + imagesPath[1]} alt="banner" />
                         </div>
                     </Carousel>
                 </div>

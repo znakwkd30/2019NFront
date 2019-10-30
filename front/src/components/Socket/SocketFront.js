@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
         alignSelf: 'flex-end'
     },
 }));
-const socket = io.connect("http://10.80.163.141:3001");
+const socket = io.connect("http://192.168.0.4:3001");
 
 const SocketClient = () => {
     const classes = useStyles();

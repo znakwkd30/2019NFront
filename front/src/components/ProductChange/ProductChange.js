@@ -171,7 +171,7 @@ function ProductChange({ match }) {
                     {imagePath.map((item, key) => {
                         return (
                             <div>
-                                <img className={classes.bannerImg} src={item.src === undefined ? defaultImg : "http://10.80.163.141:3065/" + item.src} alt="banner" />
+                                <img className={classes.bannerImg} src={item.src === undefined ? defaultImg : "http://192.168.0.4:3065/" + item.src} alt="banner" />
                             </div>
                         )
                     })}

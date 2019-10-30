@@ -206,7 +206,7 @@ function Profile({ match }) {
                 <Nav />
                 <Card className={classes.card}>
                     <div className={classes.main}>
-                        <Avatar alt="profileImg" src={userInfo.ProfileImages === null ? "../Profile/noneImg.png" : "http://10.80.163.141:3065/\\" + userImg} className={classes.avatar} />
+                        <Avatar alt="profileImg" src={userInfo.ProfileImages === null ? "../Profile/noneImg.png" : "http://192.168.0.4:3065/\\" + userImg} className={classes.avatar} />
                         <Typography variant="h3" align="center" className={classes.Typography}>
                             {userInfo.name}
                         </Typography>
@@ -251,7 +251,7 @@ function Profile({ match }) {
                                         title={<Link to={"/productinfo/" + item.id} className={classes.link}>{item.productName}</Link>}
                                         subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                                     />
-                                    <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
+                                    <img src={item.Images.length === 0 ? defaultImg : "http://192.168.0.4:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img>
                                     {/* <img src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img> */}
                                     <CardContent>
                                         <Typography variant="body2" color="textSecondary" component="p"

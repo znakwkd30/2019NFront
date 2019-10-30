@@ -43,7 +43,7 @@ const MainCard = ({ item }) => {
                     title={<Link to={"/productinfo/" + item.id} className={classes.link}>{item.productName}</Link>}
                     subheader={<Time value={item.updateDay} format="YYYY/MM/DD hh:mm" />}
                 />
-                <img alt="file" src={"http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img>
+                <img alt="file" src={"http://192.168.0.4:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }}></img>
                 
                 {/* <img src={item.Images.length === 0 ? defaultImg : "http://10.80.163.141:3065/" + item.Images[0].src} style={{ width: 350, height: 200 }} alt={item.productName}></img> */}
                 <CardContent>
