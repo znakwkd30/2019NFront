@@ -49,7 +49,7 @@ function Report() {
 
     function handleSumbit(e) {
         e.preventDefault();
-        axios.post("http://localhost:3065/api/report/reportUser", form, {
+        axios.post("http://192.168.0.4:3065/api/report/reportUser", form, {
             headers: { 
                 "token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token") 
             },

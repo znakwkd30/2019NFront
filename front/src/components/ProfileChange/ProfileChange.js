@@ -68,7 +68,7 @@ function ProfileChange({ match }) {
 
     async function handleSumbit(e) {
         e.preventDefault();
-        await axios.patch("http://localhost:3065/api/user/totalUpdate", form, {
+        await axios.patch("http://192.168.0.4:3065/api/user/totalUpdate", form, {
             headers: { 
                 "token" : window.localStorage.getItem("token") || window.sessionStorage.getItem("token") 
             },
