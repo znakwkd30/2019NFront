@@ -83,7 +83,7 @@ function Search({match}){
             <div className={classes.root} style={{ width: "80%", margin: "auto" }}> 
                 {products.map((item, key) => {
                     return (
-                        <Link to={ `/productinfo/${ --item.id }` } className={classes.link}>
+                        <Link to={ `/productinfo/${ item.ProductId }` } className={classes.link}>
                         <Card className={classes.card} key={key}>
                             <CardHeader
                                 title={item.productName}
